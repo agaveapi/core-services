@@ -1,0 +1,206 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.iplantc</groupId>
+	<artifactId>agave</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<name>iPlant Agave API Parent Project</name>
+	<description>Super pom for all Agave services</description>
+	<packaging>pom</packaging>
+	<organization>
+		<name>TACC</name>
+		<url>http://tacc.utexas.edu</url>
+	</organization>
+	<developers>
+		<developer>
+			<id>deardooley</id>
+			<name>Rion Dooley</name>
+			<email>dooley@tacc.utexas.edu</email>
+			<url>http://agaveapi.org</url>
+			<organization>TACC</organization>
+			<organizationUrl>http://www.tacc.utexas.edu</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>sterry1</id>
+			<name>Steve Terry</name>
+			<email>sterry1@tacc.utexas.edu</email>
+			<url>http://agaveapi.org</url>
+			<organization>TACC</organization>
+			<organizationUrl>http://www.tacc.utexas.edu</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>jmccurdy</id>
+			<name>James McCurdy</name>
+			<email>jmccurdy@tacc.utexas.edu</email>
+			<url>http://agaveapi.org</url>
+			<organization>TACC</organization>
+			<organizationUrl>http://www.tacc.utexas.edu</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>jstubbs</id>
+			<name>Joe Stubbs</name>
+			<email>jstubbs@tacc.utexas.edu</email>
+			<url>http://agaveapi.org</url>
+			<organization>TACC</organization>
+			<organizationUrl>http://www.tacc.utexas.edu</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<repositories>
+		<repository>
+			<id>taccaci</id>
+			<name>TACC ACI Maven repository</name>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/releases</url>
+		</repository>
+		<repository>
+			<id>renci.repository</id>
+			<name>renci.repository</name>
+			<url>http://ci-dev.renci.org/nexus/content/repositories/public</url>
+		</repository>
+		<repository>
+			<id>maven-restlet</id>
+			<name>Public online Restlet repository</name>
+			<url>http://maven.restlet.org</url>
+		</repository>
+		<repository>
+			<id>iron.io</id>
+			<name>Iron.io Maven repo</name>
+			<url>http://iron-io.github.com/maven/repository</url>
+		</repository>
+	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>taccaciplugins</id>
+			<name>TACC ACI Mavenrepository</name>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<service.war.name>${project.artifact}-${project.version}</service.war.name>
+		<foundation.service.version>${foundation.api.version}.${project.version}-r${buildNumber}</foundation.service.version>
+		<restlet.version>2.1.4</restlet.version>
+		<sonar.language>java</sonar.language>
+		<spring.version>3.2.0.RELEASE</spring.version>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.13</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.2-beta-2</version>
+				</plugin>
+				<plugin>
+			  		<groupId>org.apache.maven.plugins</groupId>
+			 		 <artifactId>maven-deploy-plugin</artifactId>
+			 		 <version>2.5</version>
+			 	</plugin>
+			 	<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.1</version>
+                </plugin>
+			 	<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.1.1</version>
+                </plugin>
+                
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>buildnumber-maven-plugin</artifactId>
+					<version>1.2</version>
+				</plugin>
+				<plugin>
+					 <groupId>org.codehaus.sonar</groupId>
+					 <artifactId>sonar-maven-plugin</artifactId>
+					 <version>3.6.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.phpmaven</groupId>
+					<artifactId>maven-php-plugin</artifactId>
+					<version>2.0.2</version>
+				</plugin>
+				
+				
+			 	<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sql-maven-plugin</artifactId>
+					<version>1.5</version>
+					<dependencies>
+						<dependency>
+							<groupId>mysql</groupId>
+							<artifactId>mysql-connector-java</artifactId>
+							<version>5.1.22</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<distributionManagement>
+		<repository>
+			<id>tacc-releases</id>
+			<name>TACC Internal Release Repository</name>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>tacc-snapshots</id>
+			<name>TACC Internal Snapshot Repository</name>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<dependencyManagement>
+		<dependencies>
+			
+		</dependencies>
+	</dependencyManagement>
+	
+	<modules>
+		<module>auth</module>
+		<module>postits</module>
+		<module>apidocs</module>
+		<module>common</module>
+		<module>profiles</module>
+		<module>notifications</module>
+		<module>metadata</module>
+		<module>systems</module>
+		<module>files</module>
+		<module>transforms</module>
+		<module>apps</module>
+		<module>jobs</module>
+	</modules>
+</project>
