@@ -190,17 +190,17 @@
 	</dependencyManagement>
 	
 	<modules>
-		<module>auth</module>
-		<module>postits</module>
-		<module>apidocs</module>
-		<module>common</module>
-		<module>profiles</module>
-		<module>notifications</module>
-		<module>metadata</module>
-		<module>systems</module>
-		<module>files</module>
-		<module>transforms</module>
-		<module>apps</module>
-		<module>jobs</module>
+		<module>agave-auth</module>
+		<module>agave-postits</module>
+		<module>agave-apidocs</module>
+		<module>agave-common</module>
+		<module>agave-profiles</module>
+		<module>agave-notifications</module>
+		<module>agave-metadata</module>
+		<module>agave-systems</module>
+		<module>agave-files</module>
+		<module>agave-transforms</module>
+		<module>agave-apps</module>
+		<module>agave-jobs</module>
 	</modules>
 </project>
