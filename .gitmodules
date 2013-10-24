@@ -33,4 +33,4 @@
 	url = ssh://git@bitbucket.org/taccaci/agave-transforms.git
 [submodule "agave-notifications"]
 	path = agave-notifications
-	url = ssh://git@bitbucket.org/taccaci/agave-notifications.git
+	url = /Users/dooley/workspace/agave/agave-notifications
