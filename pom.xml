@@ -97,7 +97,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<service.war.name>${project.artifact}-${project.version}</service.war.name>
-		<foundation.service.version>${foundation.api.version}.${project.version}-r${buildNumber}</foundation.service.version>
+		<foundation.service.version>${foundation.api.version}.${project.version}-r$\{buildNumber}</foundation.service.version>
 		<restlet.version>2.1.4</restlet.version>
 		<sonar.language>java</sonar.language>
 		<spring.version>3.2.0.RELEASE</spring.version>
@@ -105,8 +105,29 @@
 
 	<build>
 		<pluginManagement>
+
 			<plugins>
-				<plugin>
+                <!-- Boilerplace compile -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>default-compile</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <proc>none</proc>
+                        <debug>true</debug>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+                <plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
 					<version>3.3</version>
@@ -188,7 +209,13 @@
 			
 		</dependencies>
 	</dependencyManagement>
-	
+
+    <scm>
+        <connection>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</connection>
+        <url>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</url>
+        <developerConnection>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</developerConnection>
+    </scm>
+
 	<modules>
 		<module>agave-auth</module>
 		<module>agave-postits</module>
