@@ -32,4 +32,7 @@ Icon
 
 # fabric deployment files
 fabfile.py
-fabfile.pyc
+fabfile.pyc 
+
+# maven and eclipse malformed output test folders
+test-output
