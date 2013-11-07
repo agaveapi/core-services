@@ -59,7 +59,7 @@
 			</roles>
 		</developer>
 	</developers>
-	
+
 	<repositories>
 		<repository>
 			<id>taccaci</id>
@@ -82,7 +82,7 @@
 			<url>http://iron-io.github.com/maven/repository</url>
 		</repository>
 	</repositories>
-	
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>taccaciplugins</id>
@@ -93,11 +93,11 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<service.war.name>${project.artifact}-${project.version}</service.war.name>
-		<foundation.service.version>${foundation.api.version}.${project.version}-r${buildNumber}</foundation.service.version>
+		<foundation.service.version>${foundation.api.version}.${project.version}-r$\{buildNumber}</foundation.service.version>
 		<restlet.version>2.1.4</restlet.version>
 		<sonar.language>java</sonar.language>
 		<spring.version>3.2.0.RELEASE</spring.version>
@@ -105,28 +105,30 @@
 
 	<build>
 		<pluginManagement>
+
 			<plugins>
+
 				<!-- Boilerplace compile -->
-                        <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-                                <executions>
-                                        <execution>
-                                                <id>default-compile</id>
-                                                <phase>compile</phase>
-                                                <goals>
-                                                        <goal>compile</goal>
-                                                </goals>
-                                        </execution>
-                                </executions>
-                                <configuration>
-                                        <proc>none</proc>
-                                        <debug>true</debug>
-                                        <source>1.6</source>
-                                        <target>1.6</target>
-                                </configuration>
-                        </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<executions>
+						<execution>
+							<id>default-compile</id>
+							<phase>compile</phase>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<proc>none</proc>
+						<debug>true</debug>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -144,39 +146,39 @@
 					<version>2.2-beta-2</version>
 				</plugin>
 				<plugin>
-			  		<groupId>org.apache.maven.plugins</groupId>
-			 		 <artifactId>maven-deploy-plugin</artifactId>
-			 		 <version>2.5</version>
-			 	</plugin>
-			 	<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
 					<version>2.5.1</version>
-                </plugin>
-			 	<plugin>
+				</plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
 					<version>2.1.1</version>
-                </plugin>
-                
+				</plugin>
+
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>buildnumber-maven-plugin</artifactId>
 					<version>1.2</version>
 				</plugin>
 				<plugin>
-					 <groupId>org.codehaus.sonar</groupId>
-					 <artifactId>sonar-maven-plugin</artifactId>
-					 <version>3.6.2</version>
+					<groupId>org.codehaus.sonar</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>3.6.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.phpmaven</groupId>
 					<artifactId>maven-php-plugin</artifactId>
 					<version>2.0.2</version>
 				</plugin>
-				
-				
-			 	<plugin>
+
+
+				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>sql-maven-plugin</artifactId>
 					<version>1.5</version>
@@ -188,41 +190,42 @@
 						</dependency>
 					</dependencies>
 				</plugin>
-			 	<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-			 	<plugin>
-			 		<groupId>org.eclipse.m2e</groupId>
-			 		<artifactId>lifecycle-mapping</artifactId>
-			 		<version>1.0.0</version>
-			 		<configuration>
-			 			<lifecycleMappingMetadata>
-			 				<pluginExecutions>
-			 					<pluginExecution>
-			 						<pluginExecutionFilter>
-			 							<groupId>
-			 								org.codehaus.mojo
-			 							</groupId>
-			 							<artifactId>
-			 								sql-maven-plugin
-			 							</artifactId>
-			 							<versionRange>
-			 								[1.5,)
-			 							</versionRange>
-			 							<goals>
-			 								<goal>execute</goal>
-			 							</goals>
-			 						</pluginExecutionFilter>
-			 						<action>
-			 							<ignore></ignore>
-			 						</action>
-			 					</pluginExecution>
-			 				</pluginExecutions>
-			 			</lifecycleMappingMetadata>
-			 		</configuration>
-			 	</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											sql-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.5,)
+										</versionRange>
+										<goals>
+											<goal>execute</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
-	
+
 	<distributionManagement>
 		<repository>
 			<id>tacc-releases</id>
@@ -235,13 +238,19 @@
 			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-	
+
 	<dependencyManagement>
 		<dependencies>
-			
+
 		</dependencies>
 	</dependencyManagement>
-	
+
+	<scm>
+		<connection>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</connection>
+		<url>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</url>
+		<developerConnection>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</developerConnection>
+	</scm>
+
 	<modules>
 		<module>agave-auth</module>
 		<module>agave-postits</module>
