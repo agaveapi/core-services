@@ -256,8 +256,8 @@
 		<module>agave-postits</module>
 		<module>agave-apidocs</module>
 		<module>agave-common</module>
-		<module>agave-profiles</module>
 		<module>agave-notifications</module>
+		<module>agave-profiles</module>
 		<module>agave-metadata</module>
 		<module>agave-systems</module>
 		<module>agave-files</module>
