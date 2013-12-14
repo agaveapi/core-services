@@ -34,3 +34,6 @@
 [submodule "agave-notifications"]
 	path = agave-notifications
 	url = ssh://git@bitbucket.org/taccaci/agave-notifications.git
+[submodule "agave-wso2-mediator"]
+	path = agave-wso2-mediator
+	url = /Users/dooley/workspace/agave/agave-wso2-mediator

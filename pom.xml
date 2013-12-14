@@ -264,5 +264,6 @@
 		<module>agave-transforms</module>
 		<module>agave-apps</module>
 		<module>agave-jobs</module>
+		<module>agave-wso2-mediator</module>
 	</modules>
 </project>
