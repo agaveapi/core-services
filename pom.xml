@@ -59,6 +59,12 @@
 			</roles>
 		</developer>
 	</developers>
+	
+	<scm>
+		<connection>scm:git:http://bitbucket.org/taccaci/agave.git</connection>
+		<developerConnection>scm:git:ssh://git@bitbucket.org/taccaci/agave.git</developerConnection>
+		<url>https://bitbucket.org/taccaci/agave</url>
+	</scm>
 
 	<repositories>
 		<repository>
@@ -96,11 +102,13 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- <foundation.service.version>${project.version}-r$\{buildNumber}</foundation.service.version> -->
-		<foundation.service.version>${project.version}-rf64a967</foundation.service.version>
+		<foundation.service.version>${project.version}-r$\{buildNumber}</foundation.service.version> 
+		<!-- <foundation.service.version>${project.version}-rf64a967</foundation.service.version> -->
 		<restlet.version>2.1.4</restlet.version>
 		<sonar.language>java</sonar.language>
 		<spring.version>3.2.0.RELEASE</spring.version>
+		<force.check.update>false</force.check.update>
+		<force.check.version>false</force.check.version>
 	</properties>
 
 	<build>
@@ -165,6 +173,19 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>buildnumber-maven-plugin</artifactId>
 					<version>1.2</version>
+					<executions>
+						<execution>
+							<phase>validate</phase>
+							<goals>
+								<goal>create</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<shortRevisionLength>5</shortRevisionLength>
+						<doCheck>${force.check.version}</doCheck>
+						<doUpdate>${force.check.update}</doUpdate>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.sonar</groupId>
@@ -176,7 +197,6 @@
 					<artifactId>maven-php-plugin</artifactId>
 					<version>2.0.2</version>
 				</plugin>
-
 
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -244,12 +264,6 @@
 
 		</dependencies>
 	</dependencyManagement>
-
-	<scm>
-		<connection>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</connection>
-		<url>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</url>
-		<developerConnection>scm:git:ssh:git@bitbucket.org:taccaci/agave.git</developerConnection>
-	</scm>
 
 	<modules>
 		<module>agave-auth</module>
