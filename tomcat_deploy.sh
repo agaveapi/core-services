@@ -1,8 +1,12 @@
 #!/bin/bash   
 
-cd ~/agave
+cd $HOME/agave
 
-mvn -DskipTests clean install
+#git pull
+
+#git submodule update
+
+#mvn -DskipTests clean deploy
 
 # deploy swagger docs to apach web root
 mkdir /var/www/html/v2
@@ -25,12 +29,12 @@ for i in apps jobs files metadata notifications profiles systems transforms; do
 done
 
 # bounce tomcat
-service tomcat restart
+#service tomcat restart
 
-#cd $CATALINA_HOME
+cd $CATALINA_HOME
 
 #bin/kill.sh
 
 #bin/startup.sh
 
-tail -f logs/catalina.sh  
+tail -n 500 -f $CATALINA_HOME/logs/catalina.out 
