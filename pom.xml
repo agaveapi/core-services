@@ -59,7 +59,7 @@
 			</roles>
 		</developer>
 	</developers>
-	
+
 	<scm>
 		<connection>scm:git:http://bitbucket.org/taccaci/agave.git</connection>
 		<developerConnection>scm:git:ssh://git@bitbucket.org/taccaci/agave.git</developerConnection>
@@ -102,17 +102,45 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<foundation.service.version>${project.version}-r${buildNumber}</foundation.service.version> 
-		<!-- <foundation.service.version>${project.version}-rf64a967</foundation.service.version> -->
+		<foundation.service.version>${project.version}-r${buildNumber}</foundation.service.version>
 		<restlet.version>2.1.4</restlet.version>
 		<sonar.language>java</sonar.language>
 		<spring.version>3.2.0.RELEASE</spring.version>
 		<force.check.update>true</force.check.update>
 		<force.check.version>true</force.check.version>
+		<project.inceptionYear>2011</project.inceptionYear>
 	</properties>
 
 	<build>
 		<plugins>
+			<!-- <plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<header>LICENSE</header>
+					<properties>
+						<owner>Texas Advanced Computing Center</owner>
+						<year>${project.inceptionYear}</year>
+						<email>dooley@tacc.utexas.edu</email>
+						<url>${project.url}</url>
+					</properties>
+					<excludes>
+						<exclude>**/README</exclude>
+						<exclude>**/LICENSE</exclude>
+						<exclude>**/.gitignore</exclude>
+						<exclude>src/test/resources/**</exclude>
+						<exclude>src/main/resources/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
