@@ -116,17 +116,22 @@
 			<!-- <plugin>
 				<groupId>com.mycila</groupId>
 				<artifactId>license-maven-plugin</artifactId>
-				<version>2.3</version>
+				<version>2.6</version>
 				<configuration>
 					<header>LICENSE</header>
 					<properties>
 						<owner>Texas Advanced Computing Center</owner>
-						<year>${project.inceptionYear}</year>
+						<year>2014</year>
 						<email>dooley@tacc.utexas.edu</email>
-						<url>${project.url}</url>
+						<url>https://bitbucket.org/taccaci/oa4mp-wso2</url>
 					</properties>
 					<excludes>
-						<exclude>**/README</exclude>
+						<exclude>target/**</exclude>
+						<exclude>src/main/html/**</exclude>
+						<exclude>**/README.md</exclude>
+						<exclude>**/*.conf</exclude>
+						<exclude>**/*.config</exclude>
+						<exclude>**/*.config</exclude>
 						<exclude>**/LICENSE</exclude>
 						<exclude>**/.gitignore</exclude>
 						<exclude>src/test/resources/**</exclude>
@@ -298,6 +303,7 @@
 	<modules>
 		<module>agave-auth</module>
 		<module>agave-postits</module>
+		<module>agave-logging</module>
 		<module>agave-apidocs</module>
 		<module>agave-common</module>
 		<module>agave-notifications</module>

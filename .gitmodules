@@ -37,3 +37,6 @@
 [submodule "agave-wso2-mediator"]
 	path = agave-wso2-mediator
 	url = ssh://git@bitbucket.org/taccaci/agave-wso2-mediator.git
+[submodule "agave-logging"]
+	path = agave-logging
+	url = git@bitbucket.org:taccaci/agave-logging.git
