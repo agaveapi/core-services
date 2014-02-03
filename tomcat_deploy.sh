@@ -17,7 +17,7 @@ ln -s /home/iplant/agave/agave-apidocs/apidocs-api/target/classes /var/www/html/
 chmod -R 755 /var/www/html/v2/docs
 
 # deploy php apps to apache web root
-for i in auth postits; do
+for i in auth postits logging; do
 	rm -rf /var/www/html/v2/$i
 	ln -s /home/iplant/agave/agave-$i/$i-api/target/classes /var/www/html/v2/$i
 	chmod -R 755 /var/www/html/v2/$i
