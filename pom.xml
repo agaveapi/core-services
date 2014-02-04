@@ -73,6 +73,11 @@
 			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/releases</url>
 		</repository>
 		<repository>
+			<id>taccaci-snapshot</id>
+			<name>TACC ACI Maven repository</name>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/snapshots</url>
+		</repository>
+		<repository>
 			<id>renci.repository</id>
 			<name>renci.repository</name>
 			<url>http://ci-dev.renci.org/nexus/content/repositories/public</url>
