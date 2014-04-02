@@ -21,6 +21,7 @@ Starting out with a clean CentOS 6 image, run the command sin the *yum_installs.
 * Maven 3
 * *Globus 5 (optional)*
 
+
 ## Environment setup
 
 The Agave service should run as a service user, so create a user to run the service and deploy the services. **This user should not have login access or a password.**
