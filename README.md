@@ -79,5 +79,5 @@ Now you can test the service to see if it's running using the CLI from another s
 Once you verify the server is up, enable the firewall to only allow incoming traffic from from the API Manager server and then only on ports 80 and 443. This can be handled by TI at the edge of TACC's network. Server access from inside TACC should be allowed on ports 80, 443, 22, 11300, 3306, 9000, 8080, and 8443.
 
 
-updated 2014.03.04 15.04.51
+updated 2014.03.04 16.54.51
 	
