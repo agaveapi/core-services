@@ -21,6 +21,7 @@ Starting out with a clean CentOS 6 image, run the command sin the *yum_installs.
 * Maven 3
 * *Globus 5 (optional)*
 
+
 ## Environment setup
 
 The Agave service should run as a service user, so create a user to run the service and deploy the services. **This user should not have login access or a password.**
@@ -78,5 +79,5 @@ Now you can test the service to see if it's running using the CLI from another s
 Once you verify the server is up, enable the firewall to only allow incoming traffic from from the API Manager server and then only on ports 80 and 443. This can be handled by TI at the edge of TACC's network. Server access from inside TACC should be allowed on ports 80, 443, 22, 11300, 3306, 9000, 8080, and 8443.
 
 
-
+updated 2014.03.04 16.54.51
 	
