@@ -1,4 +1,4 @@
-#! /bin/bash 
+#! /bin/bash -x 
 
 echo "Starting up for integration testing" ; date +"%H-%M"
 
@@ -39,19 +39,19 @@ echo "***** Systems api"
 
 echo;echo;echo;
 echo "***** Files api"
- mvn -o -fn -Dforce.check.update=false -Dforce.check.version=false clean install -pl :files-core,:files-api
+ mvn -o -ff -Dforce.check.update=false -Dforce.check.version=false clean install -pl :files-core,:files-api
 
 echo;echo;echo;
 echo "***** Transforms api"
- mvn -o -fn -Dforce.check.update=false -Dforce.check.version=false clean install -pl :transforms-core,:transforms-api
+ mvn -o -ff -Dforce.check.update=false -Dforce.check.version=false clean install -pl :transforms-core,:transforms-api
 
 echo;echo;echo;
 echo "***** Apps api"
- mvn -o -fn -Dforce.check.update=false -Dforce.check.version=false clean install -pl :apps-core,:apps-api
+ mvn -o -ff -Dforce.check.update=false -Dforce.check.version=false clean install -pl :apps-core,:apps-api
 
 echo;echo;echo;
 echo "***** Jobs api"
-  mvn -o -fn -Dforce.check.update=false -Dforce.check.version=false clean install -pl :jobs-core,:jobs-api
+  mvn -o -ff -Dforce.check.update=false -Dforce.check.version=false clean install -pl :jobs-core,:jobs-api
 
 echo;echo;echo;
 echo "***** Done ....";  date +"%H-%M"
