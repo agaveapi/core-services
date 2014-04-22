@@ -40,3 +40,7 @@
 [submodule "agave-logging"]
 	path = agave-logging
 	url = git@bitbucket.org:taccaci/agave-logging.git
+[submodule "agave-monitors"]
+	path = agave-monitors
+	url = https://bitbucket.org/taccaci/agave-monitors
+	branch = 2.0.0
