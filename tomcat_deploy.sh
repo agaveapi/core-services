@@ -24,7 +24,7 @@ for i in auth postits logging; do
 done
 
 # deploy java webapps to tomcat
-for i in apps jobs files metadata notifications profiles systems transforms; do 
+for i in apps jobs files metadata monitors notifications profiles systems transforms; do 
 	cp agave-$i/$i-api/target/*.war $CATALINA_HOME/webapps/; 
 done
 
