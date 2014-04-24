@@ -42,4 +42,4 @@
 	url = git@bitbucket.org:taccaci/agave-logging.git
 [submodule "agave-monitors"]
 	path = agave-monitors
-	url = ssh://bitbucket.org/taccaci/agave-monitors.git
+	url = ssh://git@bitbucket.org/taccaci/agave-monitors.git
