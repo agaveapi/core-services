@@ -6,7 +6,7 @@
 	<groupId>org.iplantc</groupId>
 	<artifactId>agave</artifactId>
 	<version>2.0.0-SNAPSHOT</version>
-	<name>iPlant Agave API Parent Project</name>
+	<name>iPlant Agave API Parent POM</name>
 	<description>Super pom for all Agave services</description>
 	<packaging>pom</packaging>
 	<organization>
@@ -250,7 +250,7 @@
 						</dependency>
 					</dependencies>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
