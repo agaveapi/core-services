@@ -1,45 +1,45 @@
 [submodule "agave-apidocs"]
 	path = agave-apidocs
-	url = ssh://git@bitbucket.org/taccaci/agave-apidocs.git
+	url = https://bitbucket.org/taccaci/agave-apidocs.git
 [submodule "agave-apps"]
 	path = agave-apps
-	url = ssh://git@bitbucket.org/taccaci/agave-apps.git
+	url = https://bitbucket.org/taccaci/agave-apps.git
 [submodule "agave-auth"]
 	path = agave-auth
-	url = ssh://git@bitbucket.org/taccaci/agave-auth.git
+	url = https://bitbucket.org/taccaci/agave-auth.git
 [submodule "agave-common"]
 	path = agave-common
-	url = ssh://git@bitbucket.org/taccaci/agave-common.git
+	url = https://bitbucket.org/taccaci/agave-common.git
 [submodule "agave-files"]
 	path = agave-files
-	url = ssh://git@bitbucket.org/taccaci/agave-files.git
+	url = https://bitbucket.org/taccaci/agave-files.git
 [submodule "agave-jobs"]
 	path = agave-jobs
-	url = ssh://git@bitbucket.org/taccaci/agave-jobs.git
+	url = https://bitbucket.org/taccaci/agave-jobs.git
 [submodule "agave-metadata"]
 	path = agave-metadata
-	url = ssh://git@bitbucket.org/taccaci/agave-metadata.git
+	url = https://bitbucket.org/taccaci/agave-metadata.git
 [submodule "agave-postits"]
 	path = agave-postits
-	url = ssh://git@bitbucket.org/taccaci/agave-postits.git
+	url = https://bitbucket.org/taccaci/agave-postits.git
 [submodule "agave-profiles"]
 	path = agave-profiles
-	url = ssh://git@bitbucket.org/taccaci/agave-profiles.git
+	url = https://bitbucket.org/taccaci/agave-profiles.git
 [submodule "agave-systems"]
 	path = agave-systems
-	url = ssh://git@bitbucket.org/taccaci/agave-systems.git
+	url = https://bitbucket.org/taccaci/agave-systems.git
 [submodule "agave-transforms"]
 	path = agave-transforms
-	url = ssh://git@bitbucket.org/taccaci/agave-transforms.git
+	url = https://bitbucket.org/taccaci/agave-transforms.git
 [submodule "agave-notifications"]
 	path = agave-notifications
-	url = ssh://git@bitbucket.org/taccaci/agave-notifications.git
+	url = https://bitbucket.org/taccaci/agave-notifications.git
 [submodule "agave-wso2-mediator"]
 	path = agave-wso2-mediator
-	url = ssh://git@bitbucket.org/taccaci/agave-wso2-mediator.git
+	url = https://bitbucket.org/taccaci/agave-wso2-mediator.git
 [submodule "agave-logging"]
 	path = agave-logging
-	url = git@bitbucket.org:taccaci/agave-logging.git
+	url = https://bitbucket.org/taccaci/agave-logging.git
 [submodule "agave-monitors"]
 	path = agave-monitors
-	url = ssh://git@bitbucket.org/taccaci/agave-monitors.git
+	url = https://bitbucket.org/taccaci/agave-monitors.git
