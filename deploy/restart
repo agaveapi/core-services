@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Restarting tomcat..."
+service tomcat restart

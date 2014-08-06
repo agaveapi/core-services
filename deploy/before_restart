@@ -1,0 +1,29 @@
+#!/bin/bash
+oldrev, newrev = ARGV
+
+# Build the code base
+mvn -Dskip.integration.tests=true -Dmaven.test.skip=true  clean install
+
+# Create soft links to necessary locations in apache web root
+mkdir /var/www/html/v2 2>&1 >> /dev/null
+chmod -R 755 /var/www/html/v2  2>&1 >> /dev/null
+
+rm -rf /var/www/html/v2/docs
+ln -s /home/iplant/agave/agave-apidocs/apidocs-api/target/classes /var/www/html/v2/docs
+chmod -R 755 /var/www/html/v2/docs
+
+# deploy php apps to apache web root
+for i in auth postits logging; do
+  rm -rf /var/www/html/v2/$i
+  ln -s /home/iplant/agave/agave-$i/$i-api/target/classes /var/www/html/v2/$i
+  chmod -R 755 /var/www/html/v2/$i
+done
+
+# Kill tomcat
+service tomcat stop
+
+# Deploy java webapps to tomcat
+for i in apps jobs files metadata monitors notifications profiles systems transforms; do
+  rm -rf $CATALINA_HOME/webapps/$i* $CATALINA_HOME/webapps/work/Catalina/localhost/$i
+  cp agave-$i/$i-api/target/*.war $CATALINA_HOME/webapps/;
+done
