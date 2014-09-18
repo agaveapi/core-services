@@ -1,4 +1,4 @@
-#!/bin/bash   
+#!/bin/bash
 
 cd $HOME/agave
 
@@ -24,17 +24,17 @@ for i in auth postits logging; do
 done
 
 # deploy java webapps to tomcat
-for i in apps jobs files metadata monitors notifications profiles systems transforms; do 
-	cp agave-$i/$i-api/target/*.war $CATALINA_HOME/webapps/; 
+for i in apps jobs files metadata monitors notifications profiles systems transforms; do
+	$CATALINA_HOME/bin/kill.sh
+	rm -rf $CATALINA_HOME/webapps/$i* $CATALINA_HOME/webapps/work/Catalina/localhost/$i
+	cp agave-$i/$i-api/target/*.war $CATALINA_HOME/webapps/;
 done
 
 # bounce tomcat
-#service tomcat restart
-
-cd $CATALINA_HOME
+# service tomcat restart
 
 #bin/kill.sh
 
 #bin/startup.sh
 
-tail -n 500 -f $CATALINA_HOME/logs/catalina.out 
+tail -f $CATALINA_HOME/logs/catalina.out
