@@ -2,11 +2,11 @@
 
 cd $HOME/agave
 
-#git pull
+git pull
 
-#git submodule update
+git submodule update
 
-#mvn -DskipTests clean deploy
+mvn -Dskip.integration.tests=true -Dmaven.test.skip=true  clean install
 
 # deploy swagger docs to apach web root
 mkdir /var/www/html/v2
@@ -25,13 +25,14 @@ done
 
 # deploy java webapps to tomcat
 for i in apps jobs files metadata monitors notifications profiles systems transforms; do
-	$CATALINA_HOME/bin/kill.sh
 	rm -rf $CATALINA_HOME/webapps/$i* $CATALINA_HOME/webapps/work/Catalina/localhost/$i
 	cp agave-$i/$i-api/target/*.war $CATALINA_HOME/webapps/;
 done
 
 # bounce tomcat
-# service tomcat restart
+$CATALINA_HOME/bin/kill.sh
+
+service tomcat restart
 
 #bin/kill.sh
 
