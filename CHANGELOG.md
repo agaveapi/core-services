@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.0 - 2014-09-26
+### Added
+- NOTIFICATIONS: Adding support for setting wildcard UUID on notifications. Only tenant admins and above can add these.
+- NOTIFICATIONS: Added support for new user creation events and general profile notifications.
+
+### Changed
+- FILES: Fixed hypermedia "self" reference on individual file listings.
+- FILES: Fixed bug discovering and uploading data in virtual home directory on sftp systems.
+
+### Removed
+- No change.
+
 ## 2.0.0 - 2014-09-17
 ### Added
 - No change.
