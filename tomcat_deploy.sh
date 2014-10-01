@@ -30,12 +30,9 @@ for i in apps jobs files metadata monitors notifications profiles systems transf
 done
 
 # bounce tomcat
-#service tomcat restart
-
 $CATALINA_HOME/bin/kill.sh
+# $CATALINA_HOME/bin/startup.sh
 
-#bin/kill.sh
-
-#bin/startup.sh
+service tomcat restart
 
 tail -f $CATALINA_HOME/logs/catalina.out
