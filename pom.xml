@@ -237,6 +237,9 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>sql-maven-plugin</artifactId>
 					<version>1.5</version>
+					<configuration>
+							<skip>${maven.test.skip}</skip>
+					</configuration>
 					<dependencies>
 						<dependency>
 							<groupId>mysql</groupId>

@@ -16,28 +16,28 @@
 		<profile>
 			<id>agave</id>
 			<properties>
-			
+
 				<!-- *********************************************************************
 				**************************************************************************
-				**																		**
-				**						Agave common properties 						**	
-				**																		**
+				**																																			**
+				**						Agave common properties 																	**
+				**																																			**
 				**************************************************************************
 				***********************************************************************-->
-				
+
 				<iplant.community.username>iplant</iplant.community.username>
 				<iplant.community.password></iplant.community.password>
 				<iplant.community.charge.number>TG-MCB110022</iplant.community.charge.number>
 				<iplant.community.myproxy.server>myproxy.teragrid.org</iplant.community.myproxy.server>
 				<iplant.community.myproxy.port>7512</iplant.community.myproxy.port>
-				
+
 				<irods.username>ipcservices</irods.username>
 				<irods.password></irods.password>
 				<irods.zone>iplant</irods.zone>
 				<irods.host>data.iplantcollaborative.org</irods.host>
 				<irods.port>1247</irods.port>
 				<irods.resource>bitol</irods.resource>
-				
+
 				<foundation.api.version>2</foundation.api.version>
 				<foundation.world.username>world</foundation.world.username>
 				<foundation.public.username>public</foundation.public.username>
@@ -50,7 +50,7 @@
 				<foundation.keystore.path>/home/agave/jssecacerts</foundation.keystore.path>
 				<foundation.trusted.certs.path>/home/agave/.globus/certificates</foundation.trusted.certs.path>
 				<foundation.ca.certs.path>/home/agave/.globus/certificates</foundation.ca.certs.path>
-				
+
 				<!-- ********************** Email Properties ************************* -->
 				<foundation.smtp.user>agave</foundation.smtp.user>
 				<foundation.smtp.password></foundation.smtp.password>
@@ -68,9 +68,9 @@
 
 				<!-- *************************** Database **************************** -->
 				<foundation.db.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.jndi.connection>
-				<foundation.db.url>jdbc:mysql://localhost:3306/agave-api?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
-				<foundation.db.host>localhost</foundation.db.host>
-				<foundation.db.bootstrap>jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
+				<foundation.db.url>jdbc:mysql://mysql:3306/agave-api?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
+				<foundation.db.host>mysql</foundation.db.host>
+				<foundation.db.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
 				<foundation.db.driver>com.mysql.jdbc.Driver</foundation.db.driver>
 				<foundation.db.database>agave-api</foundation.db.database>
 				<foundation.db.username>agaveuser</foundation.db.username>
@@ -84,9 +84,9 @@
 
 				<!-- ************************* Test Database ************************* -->
 				<foundation.db.test.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.test.jndi.connection>
-				<foundation.db.test.url>jdbc:mysql://localhost:3306/test?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
-				<foundation.db.test.host>localhost</foundation.db.test.host>
-				<foundation.db.test.bootstrap>jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.bootstrap>
+				<foundation.db.test.url>jdbc:mysql://mysql:3306/test?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
+				<foundation.db.test.host>mysql</foundation.db.test.host>
+				<foundation.db.test.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.bootstrap>
 				<foundation.db.test.driver>com.mysql.jdbc.Driver</foundation.db.test.driver>
 				<foundation.db.test.database>test</foundation.db.test.database>
 				<foundation.db.test.username>agaveuser</foundation.db.test.username>
@@ -95,27 +95,27 @@
 				<!-- *********************************************************************
 				**************************************************************************
 				**																		**
-				**							Dependent services	 						**	
+				**							Dependent services	 						**
 				**																		**
 				**************************************************************************
 				***********************************************************************-->
-				
+
 				<!-- ********************** local beanstalkd ************************* -->
-				
+
 				<foundation.service.atmosphere>https://atmo.iplantcollaborative.org:443/auth</foundation.service.atmosphere>
-				
+
 				<!-- *********************** Messaging services ********************** -->
-				
+
 				<!-- ********************** local beanstalkd ************************* -->
 				<foundation.service.messaging.provider>beanstalk</foundation.service.messaging.provider>
-				<foundation.service.messaging.host>localhost</foundation.service.messaging.host>
+				<foundation.service.messaging.host>beanstalkd</foundation.service.messaging.host>
 				<foundation.service.messaging.port>11300</foundation.service.messaging.port>
 				<foundation.service.messaging.username></foundation.service.messaging.username>
 				<foundation.service.messaging.password></foundation.service.messaging.password>
-				
+
 				<!-- *************************** rabbitmq **************************** -->
 				<!--<foundation.service.messaging.provider>rabbitmq</foundation.service.messaging.provider> -->
-				<!--<foundation.service.messaging.host>localhost</foundation.service.messaging.host> --> 
+				<!--<foundation.service.messaging.host>localhost</foundation.service.messaging.host> -->
 				<!--<foundation.service.messaging.port>15672</foundation.service.messaging.port> -->
 				<!--<foundation.service.messaging.username></foundation.service.messaging.username> -->
 				<!--<foundation.service.messaging.password></foundation.service.messaging.password> -->
@@ -133,62 +133,62 @@
 				<!--<foundation.service.messaging.port>11300</foundation.service.messaging.port> -->
 				<!--<foundation.service.messaging.username></foundation.service.messaging.username> -->
 				<!--<foundation.service.messaging.password>-8LQ4</foundation.service.messaging.password> -->
-				
-					
+
+
 				<!-- *********************************************************************
 				**************************************************************************
 				**																		**
-				**					Agave service-specific properties 					**	
+				**					Agave service-specific properties 					**
 				**																		**
 				**************************************************************************
 				***********************************************************************-->
-				
-				<foundation.base.url>http://prod.agaveapi.co</foundation.base.url>
-				
-				<foundation.service.documentation>http://localhost/v2/docs</foundation.service.documentation>
-				
-				
+
+				<foundation.base.url>https://docker.example.com</foundation.base.url>
+
+				<foundation.service.documentation>https://docker.example.com/v2/docs</foundation.service.documentation>
+
+
 				<!-- *********************************************************************
-				**								PHP services 							**	
+				**								PHP services 							**
 				***********************************************************************-->
-				
+
 				<!-- ****************** Auth service (deprecated) ******************** -->
-				
+
 				<foundation.service.auth>${foundation.base.url}/auth/2.0</foundation.service.auth>
-				
+
 
 				<!-- ************************ Logging service ************************ -->
-				
-				<foundation.service.log>http://localhost/v2/logging/</foundation.service.log>
+
+				<foundation.service.log>http://log.agaveapi.co/v2/logging/</foundation.service.log>
 
 
 				<!-- ************************ PostIts service ************************ -->
-				
+
 				<foundation.service.postits>${foundation.base.url}/postits/2.0</foundation.service.postits>
 
 
 				<!-- *********************************************************************
-				**								Java services 							**	
+				**								Java services 							**
 				***********************************************************************-->
-				
-				
+
+
 				<!-- ************************ Apps service *************************** -->
-				
+
 				<foundation.service.apps>${foundation.base.url}/apps/2.0</foundation.service.apps>
 				<foundation.service.apps.jetty.port>13001</foundation.service.apps.jetty.port>
 				<foundation.service.apps.jetty.ajp.port>13002</foundation.service.apps.jetty.ajp.port>
-				
-				
+
+
 				<!-- ************************ Files service ************************** -->
-				
+
 				<foundation.service.files>${foundation.base.url}/files/2.0</foundation.service.files>
 				<foundation.service.files.disk.quota>-1</foundation.service.files.disk.quota>
 				<foundation.service.files.jetty.port>13021</foundation.service.files.jetty.port>
 				<foundation.service.files.jetty.ajp.port>13022</foundation.service.files.jetty.ajp.port>
-				
-								
+
+
 				<!-- ************************ Jobs service *************************** -->
-				
+
 				<foundation.service.jobs>${foundation.base.url}/jobs/2.0</foundation.service.jobs>
 				<foundation.service.jobs.gateway.node>false</foundation.service.jobs.gateway.node>
 				<foundation.service.jobs.allow.fork>false</foundation.service.jobs.allow.fork>
@@ -198,12 +198,12 @@
 				<foundation.service.jobs.local.system.id></foundation.service.jobs.local.system.id>
 				<foundation.service.jobs.jetty.port>13031</foundation.service.jobs.jetty.port>
 				<foundation.service.jobs.jetty.ajp.port>13032</foundation.service.jobs.jetty.ajp.port>
-				
-				
+
+
 				<!-- ************************ Meta service *************************** -->
-				
+
 				<foundation.service.meta>${foundation.base.url}/meta/2.0</foundation.service.meta>
-				<foundation.service.meta.db.host>localhost</foundation.service.meta.db.host>
+				<foundation.service.meta.db.host>beanstalkd</foundation.service.meta.db.host>
 				<foundation.service.meta.db.port>27017</foundation.service.meta.db.port>
 				<foundation.service.meta.db.user>agaveuser</foundation.service.meta.db.user>
 				<foundation.service.meta.db.pwd>password</foundation.service.meta.db.pwd>
@@ -212,10 +212,10 @@
 				<foundation.service.meta.schema.collection>schemata</foundation.service.meta.schema.collection>
 				<foundation.service.meta.jetty.port>13041</foundation.service.meta.jetty.port>
 				<foundation.service.meta.jetty.ajp.port>13042</foundation.service.meta.jetty.ajp.port>
-				
-				
+
+
 				<!-- ************************ Notification service ******************* -->
-				
+
 				<foundation.service.notif>${foundation.base.url}/notifications/2.0</foundation.service.notif>
 				<foundation.service.notif.queue>prod.notifications.queue</foundation.service.notif.queue>
 				<foundation.service.notif.topic>prod.notifications.topic</foundation.service.notif.topic>
@@ -223,7 +223,7 @@
 				<foundation.service.notif.max.tasks>1</foundation.service.notif.max.tasks>
 				<foundation.service.notif.jetty.port>13051</foundation.service.notif.jetty.port>
 				<foundation.service.notif.jetty.ajp.port>13052</foundation.service.notif.jetty.ajp.port>
-				
+
 				<!-- ************************ Profile service ************************ -->
 				<foundation.service.profiles>${foundation.base.url}/profiles/2.0</foundation.service.profiles>
 				<foundation.service.profiles.trellis.url>https://user.iplantcollaborative.org/api/v1/users/</foundation.service.profiles.trellis.url>
@@ -231,36 +231,36 @@
 				<foundation.service.profiles.trellis.key></foundation.service.profiles.trellis.key>
 				<foundation.service.profiles.jetty.port>13061</foundation.service.profiles.jetty.port>
 				<foundation.service.profiles.jetty.ajp.port>13062</foundation.service.profiles.jetty.ajp.port>
-				
+
 				<!-- ************************ Systems service ************************ -->
-				
+
 				<foundation.service.systems>${foundation.base.url}/systems/2.0</foundation.service.systems>
 				<foundation.test.credentials.username>agave</foundation.test.credentials.username>
 				<foundation.test.credentials.password>password</foundation.test.credentials.password>
 				<foundation.service.systems.jetty.port>13071</foundation.service.systems.jetty.port>
 				<foundation.service.systems.jetty.ajp.port>13072</foundation.service.systems.jetty.ajp.port>
-				
-				
+
+
 				<!-- ************************ Transforms service ********************* -->
-				
+
 				<foundation.service.transforms>${foundation.base.url}/transforms/2.0</foundation.service.transforms>
 				<foundation.service.transforms.max.tasks>2</foundation.service.transforms.max.tasks>
-				<foundation.service.transforms.file.path>/usr/local/www/apache-tomcat-6.0.37/webapps/transforms/WEB-INF/classes/transforms.xml</foundation.service.transforms.file.path>
-				<foundation.service.transforms.conversion.map.path>/usr/local/www/apache-tomcat-6.0.37/webapps/transforms/WEB-INF/classes/transform_conversion_map.xml</foundation.service.transforms.conversion.map.path>
-				<foundation.service.transforms.dir.path>/usr/local/www/apache-tomcat-6.0.37/webapps/transforms/WEB-INF/classes/transforms</foundation.service.transforms.dir.path>
+				<foundation.service.transforms.file.path>/usr/share/tomcat6/webapps/transforms/WEB-INF/classes/transforms.xml</foundation.service.transforms.file.path>
+				<foundation.service.transforms.conversion.map.path>/usr/share/tomcat6/webapps/transforms/WEB-INF/classes/transform_conversion_map.xml</foundation.service.transforms.conversion.map.path>
+				<foundation.service.transforms.dir.path>/usr/share/tomcat6/webapps/transforms/WEB-INF/classes/transforms</foundation.service.transforms.dir.path>
 				<foundation.service.transforms.jetty.port>13081</foundation.service.transforms.jetty.port>
 				<foundation.service.transforms.jetty.ajp.port>13082</foundation.service.transforms.jetty.ajp.port>
-				
+
 
 				<!-- ************************ Transfers service ********************** -->
-				
+
 				<foundation.service.transfers>${foundation.base.url}/transfers/2.0</foundation.service.transfers>
 				<foundation.service.transfers.max.tasks>1</foundation.service.transfers.max.tasks>
 				<foundation.service.transfers.max.simultaneous>-1</foundation.service.transfers.max.simultaneous>
 				<foundation.service.transfers.max.retries>3</foundation.service.transfers.max.retries>
 				<foundation.service.transfers.jetty.port>13091</foundation.service.transfers.jetty.port>
 				<foundation.service.transfers.jetty.ajp.port>13092</foundation.service.transfers.jetty.ajp.port>
-				
+
 			</properties>
 		</profile>
 	</profiles>
