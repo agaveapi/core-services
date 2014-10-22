@@ -116,11 +116,10 @@ ADD agave-notifications /agave/agave-notifications
 ADD agave-postits /agave/agave-postits
 ADD agave-profiles /agave/agave-profiles
 ADD agave-systems /agave/agave-systems
-ADD agave-tenants /agave/agave-tenants
+#ADD agave-tenants /agave/agave-tenants
 ADD agave-transforms /agave/agave-transforms
-ADD agave-usage /agave/agave-usage
+#ADD agave-usage /agave/agave-usage
 ADD agave-wso2-mediator /agave/agave-wso2-mediator
-ADD agave-wso2-userstore /agave/agave-wso2-userstore
 ADD pom.xml /agave/pom.xml
 ADD config/maven/settings.xml /root/.m2/
 
