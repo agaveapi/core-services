@@ -64,6 +64,13 @@ RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noar
 
 RUN yum -y install bind-utils sendmail sendmail-cf httpd unzip tar mod_ssl openssl git vi-minimal php php-mysql php-ldap php-mysql php-pear php-xml php-curl php-xmlrpc php-mcrypt supervisor openssh-server openssh-clients
 
+# Setup login for SSHD
+RUN mkdir -p /var/run/sshd && \
+		echo "root:root" | chpasswd && \
+		service sshd start && \
+		sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
+		sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
+
 # Generate ssl certs
 RUN openssl genrsa -out ca.key 2048 && \
 		openssl req -new -key ca.key -out ca.csr -subj '/C=US/ST=TX/L=Austin/O=University of Texas/OU=TACC/CN=Agave' && \
@@ -72,6 +79,14 @@ RUN openssl genrsa -out ca.key 2048 && \
 		cp ca.key /etc/pki/tls/private/ca.key && \
 		cp ca.csr /etc/pki/tls/private/ca.csr && \
 		chown -R apache:apache /var/www/html/
+
+# Copy apache ssl and proxy configs forcing HTTPS
+ADD config/apache/htaccess /var/www/html/.htaccess
+ADD config/apache/ssl.conf /etc/httpd/conf.d/ssl.conf
+ADD config/apache/httpd.conf /etc/httpd/conf/vhost.conf
+RUN cat /etc/httpd/conf/vhost.conf >> /etc/httpd/conf/httpd.conf && rm /etc/httpd/conf/vhost.conf
+RUN mkdir -p /var/www/html/v2
+RUN chmod -R 755 /var/www/html/v2
 
 # Install Java 7
 RUN curl -LO 'http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jdk-7u51-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie' && \
@@ -82,7 +97,6 @@ ENV JAVA_HOME /usr/java/default
 WORKDIR /usr/share
 
 # Install Tomcat6 && Maven
-
 RUN curl -skO http://apache.cs.utah.edu/tomcat/tomcat-6/v6.0.41/bin/apache-tomcat-6.0.41.tar.gz && \
 		tar xzf apache-tomcat-6.0.41.tar.gz && \
 		rm apache-tomcat-6.0.41.tar.gz && \
@@ -93,12 +107,23 @@ RUN curl -skO http://apache.cs.utah.edu/tomcat/tomcat-6/v6.0.41/bin/apache-tomca
 		rm apache-maven-3.0.5-bin.tar.gz && \
 		mkdir /root/.m2
 
-# Setup login for SSHD
-RUN mkdir -p /var/run/sshd && \
-    echo "root:root" | chpasswd && \
-		service sshd start && \
-		sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
-		sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
+# Add tomcat config and settings
+ADD config/tomcat/context.xml config/tomcat/server.xml /usr/share/tomcat6/conf/
+ENV X509_CERT_DIR /root/.globus/certificates
+ENV CATALINA_HOME /usr/share/tomcat6
+ENV JAVA_OPTS -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx4096m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:+DisableExplicitGC
+
+
+# Configure Supervisor
+RUN	mkdir -p /var/log/supervisor
+ADD config/supervisord.conf /etc/supervisord.conf
+ADD config/docker_entrypoint.sh /docker_entrypoint.sh
+
+VOLUME /agave
+
+ENTRYPOINT ["/docker_entrypoint.sh"]
+EXPOSE 10389 22 443 8080 80
+CMD ["/usr/bin/supervisord"]
 
 # Add project source
 WORKDIR /agave
@@ -122,41 +147,7 @@ ADD agave-transforms /agave/agave-transforms
 ADD agave-wso2-mediator /agave/agave-wso2-mediator
 ADD pom.xml /agave/pom.xml
 ADD config/maven/settings.xml /root/.m2/
+ADD config/tomcat_deploy.sh /agave/tomcat_deploy.sh
 
-# Build Agave APIs
-RUN	mvn -Dskip.integration.tests=true -Dmaven.test.skip=true -Dforce.check.update=false -Dforce.check.version=false clean install
-
-# Deploy Agave documentation
-RUN mkdir -p /var/www/html/v2 && \
-		chmod -R 755 /var/www/html/v2 && \
-		rm -rf /var/www/html/v2/docs && \
-		ln -s /agave/agave-apidocs/apidocs-api/target/classes /var/www/html/v2/docs && \
-		chmod -R 755 /var/www/html/v2/docs
-
-# Deploy PHP APIs to web root
-RUN for i in auth postits logging; do rm -rf /var/www/html/v2/$i ; ln -s /agave/agave-$i/$i-api/target/classes /var/www/html/v2/$i ; chmod -R 755 /var/www/html/v2/$i ; done
-
-# Deploy Java APIs to Tomcat
-RUN	for i in apps jobs files metadata monitors notifications profiles systems transforms; do rm -rf $CATALINA_HOME/webapps/$i* $CATALINA_HOME/webapps/work/Catalina/localhost/$i ; cp agave-$i/$i-api/target/*.war /usr/share/tomcat6/webapps ; done
-
-# Copy apache ssl and proxy configs forcing HTTPS
-ADD config/apache/htaccess /var/www/html/.htaccess
-ADD config/apache/ssl.conf /etc/httpd/conf.d/ssl.conf
-ADD config/apache/httpd.conf /etc/httpd/conf/vhost.conf
-RUN cat /etc/httpd/conf/vhost.conf >> /etc/httpd/conf/httpd.conf && rm /etc/httpd/conf/vhost.conf
-
-# Add tomcat config and settings
-ADD config/tomcat/context.xml config/tomcat/server.xml /usr/share/tomcat6/conf/
-ENV X509_CERT_DIR /root/.globus/certificates
-ENV JAVA_OPTS -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx4096m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:+DisableExplicitGC
-
-# Configure Supervisor
-RUN	mkdir -p /var/log/supervisor
-ADD config/supervisord.conf /etc/supervisord.conf
-ADD config/docker_entrypoint.sh /docker_entrypoint.sh
-
-VOLUME /agave
-
-ENTRYPOINT ["/docker_entrypoint.sh"]
-EXPOSE 10389 22 443 8080 80
-CMD ["/usr/bin/supervisord"]
+# Build and deploy Agave APIs, documentation, apis, etc
+RUN ./tomcat_deploy.sh

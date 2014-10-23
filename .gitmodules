@@ -45,7 +45,7 @@
 	url = https://bitbucket.org/taccaci/agave-monitors.git
 [submodule "agave-tenants"]
 	path = agave-tenants
-	url = /Users/dooley/workspace/agave/agave-tenants
+	url = https://bitbucket.org/taccaci/agave-tenants
 [submodule "agave-usage"]
 	path = agave-usage
-	url = /Users/dooley/workspace/agave/agave-usage
+	url = https://bitbucket.org/taccaci/agave-usage
