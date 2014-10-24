@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.0 - 2014-10-24
+### Added
+- Dockerfile to build the APIs as a single Docker image
+- fig.yml file to orchestrate the deployment of the Agave APIs and dependent services in a single step.
+
+### Changed
+- FILES: Fixed bug in notifications for file imports. notifications attribute was not accepted.
+- FILES: Fixed bug in web hook processing for file imports where certain web hook URLs could cause infinite loops.
+
+### Removed
+- No change.
+
 ## 2.0.0 - 2014-09-26
 ### Added
 - NOTIFICATIONS: Adding support for setting wildcard UUID on notifications. Only tenant admins and above can add these.
