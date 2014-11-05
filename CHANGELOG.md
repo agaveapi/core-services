@@ -22,6 +22,8 @@ All notable changes to this project will be documented in this file.
 - JOBS: Improved exception handling so the scheduler response bubbles back to the job error message when submission fails.
 - JOBS: Fixed a bug in job submission when retrieving the job id and the operation had not yet completed. Switched to blocking call that consumes output as it goes. This speeds up things on average quite a bit because there is no long a forced 8 second delay for every call.
 - JOBS: Updated internal representation of job values to be json based and honor the original primary value types. This fixed a bug where the json response from jobs always turned job values into strings rather than honoring the primary type.
+- JOBS: Fixed event message to reflect how the job was submitted, i.e. HPC, CLI, or other.
+- JOBS: Fixed bug where boolean parameters were not parsed in the job request if the request was made as pure json.d
 - SYSTEMS: Fixed a bug in MyProxy credential handling that prevented certificate retrieval if SSLv3 was disabled.
 - MONITORS: Fixed exception handling when a check resulted in a RuntimeException so the logs and monitor message will still present the correct message.
 - PROFILES: Fixed bug in profiles notifications that prevented the notification's template variables from resolving correctly.
