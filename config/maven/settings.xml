@@ -203,7 +203,7 @@
 				<!-- ************************ Meta service *************************** -->
 
 				<foundation.service.meta>${foundation.base.url}/meta/2.0</foundation.service.meta>
-				<foundation.service.meta.db.host>beanstalkd</foundation.service.meta.db.host>
+				<foundation.service.meta.db.host>mongo</foundation.service.meta.db.host>
 				<foundation.service.meta.db.port>27017</foundation.service.meta.db.port>
 				<foundation.service.meta.db.user>agaveuser</foundation.service.meta.db.user>
 				<foundation.service.meta.db.pwd>password</foundation.service.meta.db.pwd>
