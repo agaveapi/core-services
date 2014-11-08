@@ -31,7 +31,7 @@ For more information, visit the [Agave Developer’s Portal](http://agaveapi.co)
 
 ## Using this image
 
-The Agave Developer APIs are distributed in two forms. For development purposes and local testing, a Docker image is available with all the APIs and Live Docs bundled together into a single deployment. For production settings, the services may be run and scaled independently. In this readme, we focus on the development distribution. For information on scaling individual services, see the README files of the individual services.
+The Agave Developer APIs are distributed as Docker images. For development purposes and local testing, a Docker image is available with all the APIs and Live Docs bundled together into a single Docker image. For production and distributed deployments, we recommend the production build, which splits each API and worker process into its own image with a load balanced SSL reverse proxy. 
 
 ### Requirements
 
@@ -44,11 +44,26 @@ You should also add the hostname `agave.example.com` to your /etc/hosts file for
 
 **Mac**
 
-	> sudo echo "$(boot2docker ip 2>/dev/null) agave.example.com" >> /etc/hosts
+	> sudo echo "$(boot2docker ip 2>/dev/null) docker.example.com" >> /etc/hosts
+	
+	If you are running the 1.3.0 version of boot2docker, you should disable TLS for the build to work. Note, this should ONLY be done on the build server. 
+	
+	> boot2docker up
+	> boot2docker ssh “sudo echo "DOCKER_TLS=no" >> /var/lib/boot2docker/profile”
+	> boot2docker down
+	> unset DOCKER_TLS_VERIFY
+	> unset DOCKER_CERT_PATH
+	> boot2docker up
+	
+	If you find yourself running low on disk in your boot2docker VM, you can resize it. Note, you will have to delete the current ISO to do this. The following commands will double the memory and disk space on your VM.
+	
+	> boot2docker delete
+	> boot2docker init --memory=4096 --disksize=40000 
+	> boot2docker up
 
 **Liux**
 
-	> sudo echo "127.0.0.1 agave.example.com" >> /etc/hosts
+	> sudo echo "$(netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}') agave.example.com" >> /etc/hosts
 
 ### External dependencies
 
@@ -58,71 +73,33 @@ The Agave Developer APIs require three external services in order to function:
 * [MongoDB](http://www.mongodb.org/): an open-source document database, and the leading NoSQL database.
 * [Beanstalkd](http://kr.github.io/beanstalkd/): a simple, fast work queue
 
-Each of these services is available as a Docker image. You can create containers for them manually and link them to the Agave container or you can orchestrate the process with included [Fig](http://fig.sh) file. We leave the decision up to you.
+Each of these services is available as a Docker image. You can create containers for them manually and link them to the Agave container(s) or you can orchestrate the process with [Fig](http://fig.sh) and the included file. We leave the decision up to you.
 
-### Running with Fig
+### Starting the API containers
 
 	> fig up -d
 
-This is, obviously, the easiest way to run the API. To stop the containers, you would make the following command
+Once the containers start (this may take a minute or two), the APIs will be available at:
+
+	> https://agave.example.com/v2/docs
+
+You may need to import the SSL cert from the container depending on your client library.
+
+### Stopping the API containers
+
+To stop the containers, you would make the following command
 
 	> fig stop
 
-
-### Running containers manually
-
-Fig is a simple orchestration tool for running multiple linked containers on a single host. You can replicate the behavior by hand with the following commands.
-
-**Start MySQL:**
-
-		> docker run --name some-mysql -d 										\ # Run detached in background
-								 -e MYSQL_ROOT_PASSWORD=mysecretpassword 	\ # Default mysql root user password.
-								 -e MYSQL_DATABASE=agave-api 							\ # Database name. This should be left constant
-								 -e MYSQL_USER=agaveuser 									\ # User username. This can be random as it will be injected at runtime, but should be constant when persisting data
-								 -e MYSQL_PASSWORD=password 							\ # User password. This can be random as it will be injected at runtime, but should be constant when persisting data
-								 mysql:5.6
-
-**Start MongoDB:**
-
- 		> docker run --name some-mongo -d 		\ # Run detached in background
-								 -v `pwd`/mongo:/data/db 	\ # Mongo data directory for persisting db between invocations
-								 mongo:2.6
-
-**Start Beanstalkd:**
-
-		> docker run --name some-beanstalkd -d -t 			\ # Run detached in background
-		           -p 11300:11300												\ # beanstalkd
-		           -v `pwd`/beanstalkd:/data 						\ # Beanstalkd data directory for persisting messages between container invocations
-		           agaveapi/beanstalkd
-
-**Start The Agave APIs**
-
-		> docker run -h agave.example.com -i --rm   	\
-		           -p 20022:22                  			\ # SSHD, SFTP
-		           -p 20443:443                  			\ # Apache SSL
-		           --link some-mysql:mysql						\ # MySQL server
-		           --link some-mongo:mongo						\ # MongoDB server
-		           --link some-beanstalkd:beanstalkd	\ # Beanstalkd server
-		           --name some-agave
-		           agaveapi/agave-base
-
-**Start The OAuth Server**
-
-		> docker run -h agave.example.com -i --rm   	\
-							-p 10022:22                  				\ # SSHD, SFTP
-							-p 10443:443                  			\ # Apache SSL
-							-p 10080:80                  				\ # Apache
-							-p 8080:8080                  			\ # Tomcat
-							-p 9443:9443                  			\ # Tomcat SSL
-							--link some-agave:agave
-							--name oauth
-							-v `pwd`/repository:/usr/share/apim/repository \ # persist apim data between sessions
-							agaveapi/wso2-apim
-
+		Fig is a simple orchestration tool for running multiple linked containers on a single host. You can replicate the behavior by hand...but that's insane and error prone. Use Fig.
 
 ## Getting started
 
-From here you can interact with containers at https://agave.example.com. Several options are available to you to explore the Agave Developer APIs:
+From here you can interact with containers at 
+
+		https://agave.example.com/docs
+		
+Several options are available to you to explore the Agave Developer APIs:
 
 * [Agave CLI](https://bitbucket.org/taccaci/foundation-cli/src/master/docker/?at=master): a command line interface to the Agave Platform.
 

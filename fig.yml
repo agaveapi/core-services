@@ -1,34 +1,212 @@
 agave:
-  #build: .
-  image: agaveapi/agave-base
+  image: agaveapi/apache-ssl-proxy
   command:
   hostname: docker.example.com
   ports:
-    - "10022:22"
-    - "10443:443"
-    - "10080:80"
-    - "8080:8080"
-    - "8443:8443"
+    - "443:443"
+    - "80:80"
+  links:
+    - jobs
+    - apps
+    - transforms
+    - files
+    - monitors
+    - systems
+    - metadata
+    - profiles
+    - notifications
+    - apidocs
+    - logging
+    - postits
+    - usage
+    - tenants
+  volumes:
+    - cache/logs/apache:/var/log/httpd
+    - config/ssl:/etc/httpd/ssl
+jobs:
+  image: agaveapi/jobs-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
   links:
     - mysql
     - mongo
     - beanstalkd
+    - logging
   volumes:
-    - logs:/var/lib/supervisor
+    - cache/logs/jobs:/usr/local/tomcat/logs
+apps:
+  image: agaveapi/apps-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/apps:/usr/local/tomcat/logs
+transforms:
+  image: agaveapi/transforms-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/transforms:/usr/local/tomcat/logs
+files:
+  image: agaveapi/files-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/files:/usr/local/tomcat/logs
+monitors:
+  image: agaveapi/monitors-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/monitors:/usr/local/tomcat/logs
+systems:
+  image: agaveapi/systems-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/systems:/usr/local/tomcat/logs
+metadata:
+  image: agaveapi/metadata-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
+  links:
+    - mysql
+    - mongo
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/metadata:/usr/local/tomcat/logs
+profiles:
+  image: agaveapi/profiles-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/profiles:/usr/local/tomcat/logs
+notifications:
+  image: agaveapi/notifications-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "8080"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/notifications:/usr/local/tomcat/logs
+apidocs:
+  image: agaveapi/apidocs-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "80"
+  links:
+    - logging
+  volumes:
+    - cache/logs/apidocs:/var/log/httpd
+postits:
+  image: agaveapi/postits-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "80"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/postits:/var/log/httpd
+usage:
+  image: agaveapi/usage-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "80"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/usage:/var/log/httpd
+tenants:
+  image: agaveapi/tenants-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "80"
+  links:
+    - mysql
+    - beanstalkd
+    - logging
+  volumes:
+    - cache/logs/tenants:/var/log/httpd    
+logging:
+  image: agaveapi/logging-api:2.1.0
+  command:
+  hostname: docker.example.com
+  ports:
+    - "80"
+  links:
+    - mysql
+    - beanstalkd
+  volumes:
+    - cache/logs/logging:/var/log/httpd
 mysql:
   image: mysql:5.6
+  hostname: docker.example.com
+  ports:
+    - "3306:3306"
   environment:
-    MYSQL_DATABASE: agave-api
+    MYSQL_DATABASE: agave
     MYSQL_USER: agaveuser
     MYSQL_PASSWORD: password
     MYSQL_ROOT_PASSWORD: mysecretpassword
-  #volumes:
-  #  - mysql:/var/lib/mysql
+  volumes:
+    - cache/mysql:/var/lib/mysql
 mongo:
   image: mongo:2.6
-  #volumes:
-  #  - mongo:/data/db
+  volumes:
+    - cache/mongo:/data/db
 beanstalkd:
   image: agaveapi/beanstalkd
   volumes:
-    - beanstalkd:/data
+    - cache/beanstalkd:/data

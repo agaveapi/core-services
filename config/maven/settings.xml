@@ -68,11 +68,11 @@
 
 				<!-- *************************** Database **************************** -->
 				<foundation.db.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.jndi.connection>
-				<foundation.db.url>jdbc:mysql://mysql:3306/agave-api?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
+				<foundation.db.url>jdbc:mysql://mysql:3306/agave?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
 				<foundation.db.host>mysql</foundation.db.host>
 				<foundation.db.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
 				<foundation.db.driver>com.mysql.jdbc.Driver</foundation.db.driver>
-				<foundation.db.database>agave-api</foundation.db.database>
+				<foundation.db.database>agave</foundation.db.database>
 				<foundation.db.username>agaveuser</foundation.db.username>
 				<foundation.db.password>password</foundation.db.password>
 				<foundation.db.auth.table>authentication_tokens</foundation.db.auth.table>
@@ -108,7 +108,7 @@
 
 				<!-- ********************** local beanstalkd ************************* -->
 				<foundation.service.messaging.provider>beanstalk</foundation.service.messaging.provider>
-				<foundation.service.messaging.host>beanstalkd</foundation.service.messaging.host>
+				<foundation.service.messaging.host>beanstalk</foundation.service.messaging.host>
 				<foundation.service.messaging.port>11300</foundation.service.messaging.port>
 				<foundation.service.messaging.username></foundation.service.messaging.username>
 				<foundation.service.messaging.password></foundation.service.messaging.password>
@@ -159,7 +159,7 @@
 
 				<!-- ************************ Logging service ************************ -->
 
-				<foundation.service.log>http://log.agaveapi.co/v2/logging/</foundation.service.log>
+				<foundation.service.log>http://logging/logging/</foundation.service.log>
 
 
 				<!-- ************************ PostIts service ************************ -->
@@ -245,9 +245,9 @@
 
 				<foundation.service.transforms>${foundation.base.url}/transforms/2.0</foundation.service.transforms>
 				<foundation.service.transforms.max.tasks>2</foundation.service.transforms.max.tasks>
-				<foundation.service.transforms.file.path>/usr/share/tomcat6/webapps/transforms/WEB-INF/classes/transforms.xml</foundation.service.transforms.file.path>
-				<foundation.service.transforms.conversion.map.path>/usr/share/tomcat6/webapps/transforms/WEB-INF/classes/transform_conversion_map.xml</foundation.service.transforms.conversion.map.path>
-				<foundation.service.transforms.dir.path>/usr/share/tomcat6/webapps/transforms/WEB-INF/classes/transforms</foundation.service.transforms.dir.path>
+				<foundation.service.transforms.file.path>/usr/local/tomcat/webapps/transforms/WEB-INF/classes/transforms.xml</foundation.service.transforms.file.path>
+				<foundation.service.transforms.conversion.map.path>/usr/local/tomcat/webapps/transforms/WEB-INF/classes/transform_conversion_map.xml</foundation.service.transforms.conversion.map.path>
+				<foundation.service.transforms.dir.path>/usr/local/tomcat/webapps/transforms/WEB-INF/classes/transforms</foundation.service.transforms.dir.path>
 				<foundation.service.transforms.jetty.port>13081</foundation.service.transforms.jetty.port>
 				<foundation.service.transforms.jetty.ajp.port>13082</foundation.service.transforms.jetty.ajp.port>
 

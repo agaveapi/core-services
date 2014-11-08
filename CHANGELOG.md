@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 ## 2.1.0 - 2014-11-04
 ### Added
+- Added Maven goals to build Docker containers out of each API.
+
+### Changed
+- Updated the fig.xml file to launch the API as a series of linked containers rather than a single fat container.
+- Updated build instructions in the README.md file.
+
+### Removed
+- No change.
+
+## 2.1.0 - 2014-11-04
+### Added
 - APPS: Support for array default values for app inputs, outputs, and parameters
 - APPS: app.*.semantics.minCardinality and app.*.semantics.maxCardinality support for app inputs, outputs, and parameters.
 - APPS: Inputs and parameters maintain default ordering and ordering values in the response from the API.
