@@ -116,15 +116,15 @@
 
 	<build>
 		<plugins>
-			<!-- <plugin> <groupId>com.mycila</groupId> <artifactId>license-maven-plugin</artifactId> 
-				<version>2.6</version> <configuration> <header>LICENSE</header> <properties> 
-				<owner>Texas Advanced Computing Center</owner> <year>2014</year> <email>dooley@tacc.utexas.edu</email> 
-				<url>https://bitbucket.org/taccaci/oa4mp-wso2</url> </properties> <excludes> 
-				<exclude>target/**</exclude> <exclude>src/main/html/**</exclude> <exclude>**/README.md</exclude> 
-				<exclude>**/*.conf</exclude> <exclude>**/*.config</exclude> <exclude>**/*.config</exclude> 
-				<exclude>**/LICENSE</exclude> <exclude>**/.gitignore</exclude> <exclude>src/test/resources/**</exclude> 
-				<exclude>src/main/resources/**</exclude> </excludes> </configuration> <executions> 
-				<execution> <goals> <goal>check</goal> </goals> </execution> </executions> 
+			<!-- <plugin> <groupId>com.mycila</groupId> <artifactId>license-maven-plugin</artifactId>
+				<version>2.6</version> <configuration> <header>LICENSE</header> <properties>
+				<owner>Texas Advanced Computing Center</owner> <year>2014</year> <email>dooley@tacc.utexas.edu</email>
+				<url>https://bitbucket.org/taccaci/oa4mp-wso2</url> </properties> <excludes>
+				<exclude>target/**</exclude> <exclude>src/main/html/**</exclude> <exclude>**/README.md</exclude>
+				<exclude>**/*.conf</exclude> <exclude>**/*.config</exclude> <exclude>**/*.config</exclude>
+				<exclude>**/LICENSE</exclude> <exclude>**/.gitignore</exclude> <exclude>src/test/resources/**</exclude>
+				<exclude>src/main/resources/**</exclude> </excludes> </configuration> <executions>
+				<execution> <goals> <goal>check</goal> </goals> </execution> </executions>
 				</plugin> -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -166,8 +166,8 @@
 					<configuration>
 						<proc>none</proc>
 						<debug>true</debug>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>1.7</source>
+						<target>1.7</target>
 					</configuration>
 				</plugin>
 
@@ -185,6 +185,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.2-beta-2</version>
+				</plugin>
+				<plugin>
+					<groupId>com.spotify</groupId>
+					<artifactId>maven-docker-plugin</artifactId>
+					<version>0.0.23</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -229,7 +234,7 @@
 					</dependencies>
 				</plugin>
 
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -277,18 +282,6 @@
 			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.0.24-SNAPSHOT</version>
-				<scope>compile</scope>
-			</dependency>
-
-		</dependencies>
-	</dependencyManagement>
 
 	<modules>
 		<module>agave-auth</module>
