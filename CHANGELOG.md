@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.0 - 2014-12-04
+### Added
+- No change.
+
+### Changed
+- SYSTEMS: Rewrote the ssh tunneling code to produce more reliable tunnels through dynamic port selection and a vt100 pseudo terminal to the remote system.
+- APPS: Rolling back change of app.parameter.value.enumValues attribute to app.parameter.value.enum_values for legacy compatibility.
+
+### Removed
+- No change.
+
+
 ## 2.1.0 - 2014-11-04
 ### Added
 - Added Maven goals to build Docker containers out of each API.

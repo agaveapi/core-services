@@ -111,7 +111,7 @@
 		<force.check.update>true</force.check.update>
 		<force.check.version>true</force.check.version>
 		<project.inceptionYear>2011</project.inceptionYear>
-		<skip.docker.build>false</skip.docker.build>
+		<skip.docker.build>true</skip.docker.build>
 	</properties>
 
 	<build>
