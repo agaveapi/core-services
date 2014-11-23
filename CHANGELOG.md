@@ -1,7 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2.1.0 - 2014-12-04
+## 2.1.0 - 2014-11-23
+### Added
+- No change.
+
+### Changed
+- APPS: Fixed a bug where app.input.semantics.maxCardinality was not preserved when copying or publishing an app.
+- APPS: Fixed a bug where app.output.value.order was not preserved when copying or publishing an app.
+- JOBS: Fixed a bug where jobs could remain in a persistent active state when they failed due to parsing or unexpected errors from the file system. Now they will be set to FAILED after the max job expiration time is reached.
+ 
+### Removed
+- No change.
+
+
+## 2.1.0 - 2014-11-05
 ### Added
 - No change.
 
