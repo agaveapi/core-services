@@ -68,9 +68,9 @@
 
 				<!-- *************************** Database **************************** -->
 				<foundation.db.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.jndi.connection>
-				<foundation.db.url>jdbc:mysql://mysql:3306/agave?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
+				<foundation.db.url>jdbc:mysql://localhost:3306/agave?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
 				<foundation.db.host>mysql</foundation.db.host>
-				<foundation.db.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
+				<foundation.db.bootstrap>jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
 				<foundation.db.driver>com.mysql.jdbc.Driver</foundation.db.driver>
 				<foundation.db.database>agave</foundation.db.database>
 				<foundation.db.username>agaveuser</foundation.db.username>
@@ -84,11 +84,11 @@
 
 				<!-- ************************* Test Database ************************* -->
 				<foundation.db.test.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.test.jndi.connection>
-				<foundation.db.test.url>jdbc:mysql://mysql:3306/test?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
+				<foundation.db.test.url>jdbc:mysql://localhost:3306/agave?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
 				<foundation.db.test.host>mysql</foundation.db.test.host>
-				<foundation.db.test.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.bootstrap>
+				<foundation.db.test.bootstrap>jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.bootstrap>
 				<foundation.db.test.driver>com.mysql.jdbc.Driver</foundation.db.test.driver>
-				<foundation.db.test.database>test</foundation.db.test.database>
+				<foundation.db.test.database>agave</foundation.db.test.database>
 				<foundation.db.test.username>agaveuser</foundation.db.test.username>
 				<foundation.db.test.password>password</foundation.db.test.password>
 
