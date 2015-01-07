@@ -72,13 +72,13 @@
                 ***********************************************************************-->
 
                 <iplant.community.username>iplant</iplant.community.username>
-                <iplant.community.password></iplant.community.password>
+                <iplant.community.password>iplant.password</iplant.community.password>
                 <iplant.community.charge.number>TG-MCB110022</iplant.community.charge.number>
                 <iplant.community.myproxy.server>myproxy.teragrid.org</iplant.community.myproxy.server>
                 <iplant.community.myproxy.port>7512</iplant.community.myproxy.port>
 
                 <irods.username>ipcservices</irods.username>
-                <irods.password></irods.password>
+                <irods.password>ipcservices.password</irods.password>
                 <irods.zone>iplant</irods.zone>
                 <irods.host>data.iplantcollaborative.org</irods.host>
                 <irods.port>1247</irods.port>
@@ -155,7 +155,7 @@
 
                 <!-- ********************** local beanstalkd ************************* -->
                 <foundation.service.messaging.provider>beanstalk</foundation.service.messaging.provider>
-                <foundation.service.messaging.host>beanstalk</foundation.service.messaging.host>
+                <foundation.service.messaging.host>localhost</foundation.service.messaging.host>
                 <foundation.service.messaging.port>11300</foundation.service.messaging.port>
                 <foundation.service.messaging.username></foundation.service.messaging.username>
                 <foundation.service.messaging.password></foundation.service.messaging.password>
