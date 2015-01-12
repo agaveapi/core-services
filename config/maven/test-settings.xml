@@ -15,13 +15,15 @@
     <profiles>
         <profile>
             <!-- *********************************************************************
-            **	turns off tests and build of docker containers			    		**																													**
+            **	turns off tests and build of docker containers                      **
             ***********************************************************************-->
             <id>plain</id>
             <properties>
                 <force.check.update>false</force.check.update>
                 <force.check.version>false</force.check.version>
                 <skip.docker.build>true</skip.docker.build>
+                <skip.utest.docker.build>true</skip.utest.docker.build>
+                <skip.utest.docker.run>true</skip.utest.docker.run>
                 <skip.create-db>true</skip.create-db>
                 <maven.test.skip>true</maven.test.skip>
                 <skipTests>true</skipTests>
@@ -30,20 +32,26 @@
         <profile>
             <id>sandbox</id>
             <!-- *********************************************************************
-            **	turns off tests and build of unit test container					**																													**
-            **	but keeps the api container build 					 				**
+            **	turns off tests and build of unit test container                    **
+            **	but keeps the api container build                                   **
             ***********************************************************************-->
             <properties>
                 <force.check.update>false</force.check.update>
                 <force.check.version>false</force.check.version>
                 <skip.docker.build>false</skip.docker.build>
+                <skip.utest.docker.build>true</skip.utest.docker.build>
+                <skip.utest.docker.run>true</skip.utest.docker.run>
                 <skip.create-db>true</skip.create-db>
                 <maven.test.skip>true</maven.test.skip>
                 <skipTests>true</skipTests>
             </properties>
         </profile>
         <profile>
-            <id>test</id>
+            <id>utest</id>
+            <!-- *********************************************************************
+            **	turns on tests and build of unit test container                     **
+            **	and turns off the api container build                               **
+            ***********************************************************************-->
             <properties>
                 <force.check.update>false</force.check.update>
                 <force.check.version>false</force.check.version>
@@ -53,9 +61,13 @@
                 <skip.create-db>true</skip.create-db>
                 <skipTests>true</skipTests>
                 <foundation.db.url>jdbc:mysql://localhost:3306/agave?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
-                <foundation.db.bootstrap>jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
+                <foundation.db.bootstrap>
+                    jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true
+                </foundation.db.bootstrap>
                 <foundation.db.test.url>jdbc:mysql://localhost:3306/agave?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
-                <foundation.db.test.bootstrap>jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.bootstrap>
+                <foundation.db.test.bootstrap>
+                    jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true
+                </foundation.db.test.bootstrap>
                 <foundation.db.test.database>agave</foundation.db.test.database>
             </properties>
         </profile>
@@ -114,9 +126,11 @@
 
                 <!-- *************************** Database **************************** -->
                 <foundation.db.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.jndi.connection>
-				<foundation.db.url>jdbc:mysql://localhost:3306/agave?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
+                <foundation.db.url>jdbc:mysql://localhost:3306/agave?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
                 <foundation.db.host>mysql</foundation.db.host>
-				<foundation.db.bootstrap>jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
+                <foundation.db.bootstrap>
+                    jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true
+                </foundation.db.bootstrap>
                 <foundation.db.driver>com.mysql.jdbc.Driver</foundation.db.driver>
                 <foundation.db.database>agave</foundation.db.database>
                 <foundation.db.username>agaveuser</foundation.db.username>
@@ -130,11 +144,13 @@
 
                 <!-- ************************* Test Database ************************* -->
                 <foundation.db.test.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.test.jndi.connection>
-				<foundation.db.test.url>jdbc:mysql://localhost:3306/agave?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
+                <foundation.db.test.url>jdbc:mysql://localhost:3306/agave?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
                 <foundation.db.test.host>mysql</foundation.db.test.host>
-				<foundation.db.test.bootstrap>jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.bootstrap>
+                <foundation.db.test.bootstrap>
+                    jdbc:mysql://localhost:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true
+                </foundation.db.test.bootstrap>
                 <foundation.db.test.driver>com.mysql.jdbc.Driver</foundation.db.test.driver>
-				<foundation.db.test.database>agave</foundation.db.test.database>
+                <foundation.db.test.database>agave</foundation.db.test.database>
                 <foundation.db.test.username>agaveuser</foundation.db.test.username>
                 <foundation.db.test.password>password</foundation.db.test.password>
 
