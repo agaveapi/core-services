@@ -81,7 +81,12 @@
 		<repository>
 			<id>maven-restlet</id>
 			<name>Public online Restlet repository</name>
-			<url>http://maven.restlet.org</url>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/maven-restlet</url>
+		</repository>
+		<repository>
+			<id>renci</id>
+			<name>Renci IRODS Maven Repo</name>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/renci.repository</url>
 		</repository>
 
 		<repository>
