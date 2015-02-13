@@ -246,6 +246,8 @@ mongo:
     - cache/mongo:/data/db
 beanstalkd:
   image: agaveapi/beanstalkd
+  ports:
+    - "11300:11300"
   mem_limit: 2000000000
   volumes:
     - cache/beanstalkd:/data
