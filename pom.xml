@@ -81,9 +81,8 @@
 		<repository>
 			<id>maven-restlet</id>
 			<name>Public online Restlet repository</name>
-			<url>http://maven.restlet.org</url>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/maven-restlet/</url>
 		</repository>
-
 		<repository>
 			<id>iron.io</id>
 			<name>Iron.io Maven repo</name>
@@ -189,7 +188,7 @@
 				<plugin>
 					<groupId>com.spotify</groupId>
 					<artifactId>docker-maven-plugin</artifactId>
-					<version>0.0.23</version>
+					<version>0.1.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
