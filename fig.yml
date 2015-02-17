@@ -20,6 +20,7 @@ agave:
     - postits
     - usage
     - tenants
+  mem_limit: 1000000000
   volumes:
     - cache/logs/apache:/var/log/httpd
     - config/ssl:/etc/httpd/ssl
@@ -29,11 +30,15 @@ jobs:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - mongo
     - beanstalkd
     - logging
+    - "storage:storage.example.com"
+    - "compute:execute.example.com"
+  mem_limit: 2000000000
   volumes:
     - cache/logs/jobs:/usr/local/tomcat/logs
 apps:
@@ -42,10 +47,14 @@ apps:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - beanstalkd
     - logging
+    - "storage:storage.example.com"
+    - "compute:execute.example.com"
+  mem_limit: 1000000000
   volumes:
     - cache/logs/apps:/usr/local/tomcat/logs
 transforms:
@@ -54,10 +63,14 @@ transforms:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - beanstalkd
     - logging
+    - "storage:storage.example.com"
+    - "compute:execute.example.com"
+  mem_limit: 1000000000
   volumes:
     - cache/logs/transforms:/usr/local/tomcat/logs
 files:
@@ -66,10 +79,14 @@ files:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - beanstalkd
     - logging
+    - "storage:storage.example.com"
+    - "compute:execute.example.com"
+  mem_limit: 4000000000
   volumes:
     - cache/logs/files:/usr/local/tomcat/logs
 monitors:
@@ -78,10 +95,14 @@ monitors:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - beanstalkd
     - logging
+    - "storage:storage.example.com"
+    - "compute:execute.example.com"
+  mem_limit: 1000000000
   volumes:
     - cache/logs/monitors:/usr/local/tomcat/logs
 systems:
@@ -90,10 +111,14 @@ systems:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - beanstalkd
     - logging
+    - "storage:storage.example.com"
+    - "compute:execute.example.com"
+  mem_limit: 1000000000
   volumes:
     - cache/logs/systems:/usr/local/tomcat/logs
 metadata:
@@ -102,11 +127,13 @@ metadata:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - mongo
     - beanstalkd
     - logging
+  mem_limit: 1000000000
   volumes:
     - cache/logs/metadata:/usr/local/tomcat/logs
 profiles:
@@ -115,10 +142,12 @@ profiles:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - beanstalkd
     - logging
+  mem_limit: 1000000000
   volumes:
     - cache/logs/profiles:/usr/local/tomcat/logs
 notifications:
@@ -127,10 +156,12 @@ notifications:
   hostname: docker.example.com
   ports:
     - "8080"
+    - "8009"
   links:
     - mysql
     - beanstalkd
     - logging
+  mem_limit: 2000000000
   volumes:
     - cache/logs/notifications:/usr/local/tomcat/logs
 apidocs:
@@ -141,6 +172,7 @@ apidocs:
     - "80"
   links:
     - logging
+  mem_limit: 1000000000
   volumes:
     - cache/logs/apidocs:/var/log/httpd
 postits:
@@ -153,6 +185,7 @@ postits:
     - mysql
     - beanstalkd
     - logging
+  mem_limit: 1000000000
   volumes:
     - cache/logs/postits:/var/log/httpd
 usage:
@@ -165,6 +198,7 @@ usage:
     - mysql
     - beanstalkd
     - logging
+  mem_limit: 1000000000
   volumes:
     - cache/logs/usage:/var/log/httpd
 tenants:
@@ -177,8 +211,9 @@ tenants:
     - mysql
     - beanstalkd
     - logging
+  mem_limit: 1000000000
   volumes:
-    - cache/logs/tenants:/var/log/httpd    
+    - cache/logs/tenants:/var/log/httpd
 logging:
   image: agaveapi/logging-api:2.1.0
   command:
@@ -188,10 +223,11 @@ logging:
   links:
     - mysql
     - beanstalkd
+  mem_limit: 1000000000
   volumes:
     - cache/logs/logging:/var/log/httpd
 mysql:
-  image: mysql:5.6
+  image: deardooley/mysql
   hostname: docker.example.com
   ports:
     - "3306:3306"
@@ -200,13 +236,34 @@ mysql:
     MYSQL_USER: agaveuser
     MYSQL_PASSWORD: password
     MYSQL_ROOT_PASSWORD: mysecretpassword
+  mem_limit: 1000000000
   volumes:
     - cache/mysql:/var/lib/mysql
 mongo:
   image: mongo:2.6
+  mem_limit: 1000000000
   volumes:
     - cache/mongo:/data/db
 beanstalkd:
   image: agaveapi/beanstalkd
+  ports:
+    - "11300:11300"
+  mem_limit: 2000000000
   volumes:
     - cache/beanstalkd:/data
+storage:
+  image: agaveapi/centos-base
+  hostname: storage.example.com
+  mem_limit: 2000000000
+  volumes:
+    - cache/storage/sftp:/data
+  ports:
+    - "10033:22"
+compute:
+  image: agaveapi/slurm
+  hostname: execute.example.com
+  mem_limit: 4000000000
+  volumes:
+    - cache/compute/slurm:/scratch
+  ports:
+    - "10044:22"

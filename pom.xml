@@ -81,7 +81,16 @@
 		<repository>
 			<id>maven-restlet</id>
 			<name>Public online Restlet repository</name>
+<<<<<<< HEAD
 			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/maven-restlet/</url>
+=======
+			<url>http://maven.restlet.com</url>
+		</repository>
+		<repository>
+			<id>renci</id>
+			<name>Renci IRODS Maven Repo</name>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/renci.repository</url>
+>>>>>>> steve-2.1.0
 		</repository>
 		<repository>
 			<id>iron.io</id>
@@ -111,6 +120,9 @@
 		<force.check.version>true</force.check.version>
 		<project.inceptionYear>2011</project.inceptionYear>
 		<skip.docker.build>true</skip.docker.build>
+        <skip.utest.docker.build>true</skip.utest.docker.build>
+        <skip.utest.docker.run>true</skip.utest.docker.run>
+        <skip.create-db>false</skip.create-db>
 	</properties>
 
 	<build>
@@ -235,6 +247,7 @@
 
 				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
+                <!--
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -265,6 +278,7 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+                -->
 			</plugins>
 		</pluginManagement>
 	</build>
