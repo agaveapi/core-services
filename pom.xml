@@ -111,6 +111,9 @@
 		<force.check.version>true</force.check.version>
 		<project.inceptionYear>2011</project.inceptionYear>
 		<skip.docker.build>true</skip.docker.build>
+        <skip.utest.docker.build>true</skip.utest.docker.build>
+        <skip.utest.docker.run>true</skip.utest.docker.run>
+        <skip.create-db>false</skip.create-db>
 	</properties>
 
 	<build>
@@ -235,6 +238,7 @@
 
 				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
+                <!--
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -265,6 +269,7 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+                -->
 			</plugins>
 		</pluginManagement>
 	</build>
