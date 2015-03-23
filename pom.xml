@@ -302,6 +302,7 @@
 		<module>agave-monitors</module>
 		<module>agave-files</module>
 		<module>agave-transforms</module>
+		<module>agave-transfers</module>
 		<module>agave-apps</module>
 		<module>agave-jobs</module>
 		<module>agave-wso2-mediator</module>

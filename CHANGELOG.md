@@ -1,6 +1,45 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.0 - 2015-02-27
+### Added
+- TRANSFERS: Added ability to POST to the api to create new transfers.
+- USAGE: Added new usage api for detailed information about what's going on at a global, tenant, user, and client level.
+- TENANTS: Added new tenants api to get readonly information about active tenants.
+- USAGETRIGGERS: Added new api to create policy-based triggers on usage activity. Notifications can be added to the triggers to receive real-time alerts of system utilization, quota violation, capacity concerns, etc. It's completely up to the user what they want to watch. 
+- APPS: Added app.parameters.[].semantics.maxCardinality and app.parameters.[].semantics.minCardinality to every app details response. It was missing before regardless of whether they were explicity set.
+- NOTIFICATIONS: Added in support for usage trigger notifications.
+- Added Splunk container to `prod.yml` file to handle log aggregation in production.
+
+
+## 2.1.0 - 2015-02-20
+### Added
+- JOBS: Added the `_links.archiveSystem` attribute to the hypermedia response of a job. This will point to the system where the data actually resides after the job completes.
+- JOBS: Added the `created` attribute to the job summary object returned in the jobs collection response. This is the actual creation timestamp of the job. 
+- JOBS: Updated job output management to support partial data queries (Range headers) exactly as the Files service does.
+- FILES: Added a transfer URL to the hypermedia response of all file/folder object responses with a current active transfer. The transfer URL points to the new Transfers api.
+- TRANSFERS: Added a new API to give information about file/folder transfers. Currently new transfers are still scheduled through the Files api. 
+- NOTIFICATIONS: Added in support for transfer notifications. This was previously provided by the FILES API. It now provides redundant notification registration as only one will be called.
+- Added new build system to deploy platform as an orchestration of Docker containers.
+- Added new `prod.yml` file for production deployments.
+
+### Changed
+- APPS: Added the ability to register an app with an execution system as the `deploymentSystem`
+- APPS: Fixed a bug where the `defaultMaxRunTime` of a job could not be set to the maximum requested time of the execution system queue.
+- APPS: Updated app publishing to record data movement as transfer tasks.
+- JOBS: Fixed a bug where the `outputPath` value was always null. Now it will point to the actual working directory of the job.
+- JOBS: Fixed a bug where the job name was not properly slugified when generating files and commands. This caused several jobs to fail when people used exclaimation points in their job names.
+- JOBS: Refactored org.iplantc.service.jobs.util.Slug class to the org.iplantc.service.common.util.Slug class for reuse in other APIs.
+- FILES: Updated direct file uploads to record data movement as transfer tasks.
+- JOBS: Updated file and app staging to record data movement as transfer tasks.
+- JOBS: Updated job output management to record data movement as a transfer task. 
+- SYSTEMS: Refactored the URLCopy and individual protocol adapters to record progress of all data movement in transfer tasks.
+- SYSTEMS: Refactored the URLCopy class to do a 2 phase copy for transfers under 2GB as this is faster than streaming transfers when going across protocols as it allows for parallel, striped, and multipart uploads.    
+ 
+### Removed
+- No change.
+
+ 
 ## 2.1.0 - 2014-11-23
 ### Added
 - No change.
