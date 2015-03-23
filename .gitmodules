@@ -49,7 +49,6 @@
 [submodule "agave-usage"]
 	path = agave-usage
 	url = https://bitbucket.org/taccaci/agave-usage
-
 [submodule "agave-transfers"]
 	path = agave-transfers
-	url = https://bitbucket.org/taccaci/agave-transforms.git
+	url = https://bitbucket.org/agaveapi/agave-transfers.git
