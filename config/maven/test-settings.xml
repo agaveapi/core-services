@@ -24,6 +24,7 @@
                 <skip.docker.build>true</skip.docker.build>
                 <skip.utest.docker.build>true</skip.utest.docker.build>
                 <skip.utest.docker.run>true</skip.utest.docker.run>
+                <skip.itest.run>true</skip.itest.run>
                 <skip.create-db>true</skip.create-db>
                 <maven.test.skip>true</maven.test.skip>
                 <skipTests>true</skipTests>
