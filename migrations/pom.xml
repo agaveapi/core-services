@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- <parent>
+		<groupId>org.iplantc</groupId>
+		<artifactId>agave</artifactId>
+		<version>2.1.0</version>
+	</parent> -->
+	<groupId>org.iplantc.agave</groupId>
+	<artifactId>migrations</artifactId>
+	<version>2.1.0</version>
+	<name>iPlant Agave API Database Migrations</name>
+	<description>Migration definitions and controls for the Agave Platform</description>
+	<packaging>jar</packaging>
+
+	<properties>
+		<force.check.update>false</force.check.update>
+		<force.check.version>false</force.check.version>
+	</properties>
+	
+	<profiles>
+		<profile>
+			<id>test</id>
+			<build>
+				<resources>
+		            <resource>
+		                <filtering>true</filtering>
+		                <directory>src/main/resources</directory>
+		            </resource>
+		        </resources>
+				<plugins>
+					<plugin>
+						<groupId>com.googlecode.flyway</groupId>
+						<artifactId>flyway-maven-plugin</artifactId>
+						<version>1.7</version>
+						<configuration>
+							<driver>${foundation.db.test.driver}</driver>
+							<url>jdbc:mysql://localhost:3306/flywaytest?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</url>
+							<user>root</user>
+							<password></password>
+							<!-- <schemas> 
+							<schema>schema1</schema> 
+							<schema>schema2</schema> 
+							<schema>schema3</schema> 
+								</schemas> -->
+							<table>migrations</table>
+							<!-- 
+								<callbacks> 
+									<callback>com.mycompany.project.CustomCallback</callback> 
+									<callback>com.mycompany.project.AnotherCallback</callback> 
+								</callbacks> 
+							-->
+							<baselineVersion>2.1.0</baselineVersion>
+							<baselineDescription>Base Migration</baselineDescription>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<build>
+				<resources>
+		            <resource>
+		                <filtering>true</filtering>
+		                <directory>src/main/resources</directory>
+		            </resource>
+		        </resources>
+				<plugins>
+					<plugin>
+						<groupId>com.googlecode.flyway</groupId>
+						<artifactId>flyway-maven-plugin</artifactId>
+						<version>1.7</version>
+						<configuration>
+							<driver>${foundation.db.driver}</driver>
+							<url>${foundation.db.url}</url>
+							<user>${foundation.db.username}</user>
+							<password>${foundation.db.password}</password>
+							<!-- <schemas> <schema>schema1</schema> <schema>schema2</schema> <schema>schema3</schema> 
+								</schemas> -->
+							<table>migrations</table>
+							<!-- <callbacks> <callback>com.mycompany.project.CustomCallback</callback> 
+								<callback>com.mycompany.project.AnotherCallback</callback> </callbacks> -->
+							<baselineVersion>1.0</baselineVersion>
+							<baselineDescription>Base Migration</baselineDescription>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<!-- Fly way -->
+		<dependency>
+			<groupId>com.googlecode.flyway</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>1.7</version>
+		</dependency>
+
+		<!-- mysql jdbc driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.21</version>
+		</dependency>
+	</dependencies>
+
+</project>
