@@ -24,6 +24,7 @@
                 <skip.docker.build>true</skip.docker.build>
                 <skip.utest.docker.build>true</skip.utest.docker.build>
                 <skip.utest.docker.run>true</skip.utest.docker.run>
+                <skip.itest.run>true</skip.itest.run>
                 <skip.create-db>true</skip.create-db>
                 <maven.test.skip>true</maven.test.skip>
                 <skipTests>true</skipTests>
@@ -55,9 +56,10 @@
             <properties>
                 <force.check.update>false</force.check.update>
                 <force.check.version>false</force.check.version>
-                <skip.docker.build>false</skip.docker.build>
+                <skip.docker.build>true</skip.docker.build>
                 <skip.utest.docker.build>false</skip.utest.docker.build>
                 <skip.utest.docker.run>false</skip.utest.docker.run>
+                <skip.itest.run>true</skip.itest.run>
                 <skip.create-db>true</skip.create-db>
                 <skipTests>true</skipTests>
                 <foundation.db.url>jdbc:mysql://localhost:3306/agave?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
