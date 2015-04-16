@@ -11,6 +11,14 @@ All notable changes to this project will be documented in this file.
 - NOTIFICATIONS: Added in support for usage trigger notifications.
 - Added Splunk container to `prod.yml` file to handle log aggregation in production.
 
+## 2.1.1 - 2015-04-13
+### Added
+
+### Changed
+- APPS: Fixed bug in URI parsing preventing convenience urls to the files API from being recognized as internal URI.
+-  
+### Removed
+- No change.
 
 ## 2.1.0 - 2015-02-20
 ### Added
