@@ -45,7 +45,8 @@ All notable changes to this project will be documented in this file.
 - JOBS: Fixed a bug in job status updates where the job tenant context was not loaded before attempting to update the job. This caused all non-iplant tenant job callbacks to fail.
 - JOBS: Fixed a concurrency bug which caused jobs to abitrarily fail, be killed, cleaned up, and/or fail to archive. No lock was obtained on the job record when a worker claimed a task. As a result, when the workers tried to respond to collisions, they would roll back the transaction. This prevented the subsequent update from succeeded. 
 - SYSTEMS: Refactored the URLCopy and individual protocol adapters to record progress of all data movement in transfer tasks.
-- SYSTEMS: Refactored the URLCopy class to do a 2 phase copy for transfers under 2GB as this is faster than streaming transfers when going across protocols as it allows for parallel, striped, and multipart uploads.    
+- SYSTEMS: Refactored the URLCopy class to do a 2 phase copy for transfers under 2GB as this is faster than streaming transfers when going across protocols as it allows for parallel, striped, and multipart uploads.  
+- SYSTEMS: Fixed several bugs related to 3rd party, server-side copy operations.  
  
 ### Removed
 - No change.
