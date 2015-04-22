@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ## 2.1.1 - 2015-04-13
 ### Added
-
+- FILES: Added support to stage in via standard FTP. Formal FTP system support is not opened up.
 ### Changed
 - APPS: Fixed bug in URI parsing preventing convenience urls to the files API from being recognized as internal URI.
 -  
