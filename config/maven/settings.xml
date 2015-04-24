@@ -155,7 +155,7 @@
 
                 <!-- ****************** Auth service (deprecated) ******************** -->
 
-                <foundation.service.auth>${foundation.base.url}/auth/2.0</foundation.service.auth>
+                <foundation.service.auth>${foundation.base.url}/auth/v2</foundation.service.auth>
 
 
                 <!-- ************************ Logging service ************************ -->
@@ -165,7 +165,7 @@
 
                 <!-- ************************ PostIts service ************************ -->
 
-                <foundation.service.postits>${foundation.base.url}/postits/2.0</foundation.service.postits>
+                <foundation.service.postits>${foundation.base.url}/postits/v2</foundation.service.postits>
 
 
                 <!-- *********************************************************************
@@ -175,7 +175,7 @@
 
                 <!-- ************************ Apps service *************************** -->
 
-                <foundation.service.apps>${foundation.base.url}/apps/2.0</foundation.service.apps>
+                <foundation.service.apps>${foundation.base.url}/apps/v2</foundation.service.apps>
                 <foundation.service.apps.publishing.queue>prod.apps.publishing.queue</foundation.service.apps.publishing.queue>
                 <foundation.service.apps.publishing.topic>prod.apps.publishing.topic</foundation.service.apps.publishing.topic>
                 <foundation.service.apps.jetty.port>13001</foundation.service.apps.jetty.port>
@@ -184,7 +184,7 @@
 
                 <!-- ************************ Files service ************************** -->
 
-                <foundation.service.files>${foundation.base.url}/files/2.0</foundation.service.files>
+                <foundation.service.files>${foundation.base.url}/files/v2</foundation.service.files>
                 <foundation.service.files.encoding.queue>prod.files.encoding.queue</foundation.service.files.encoding.queue>
                 <foundation.service.files.encoding.topic>prod.files.encoding.topic</foundation.service.files.encoding.topic>
                 <foundation.service.files.staging.queue>prod.files.staging.queue</foundation.service.files.staging.queue>
@@ -196,12 +196,12 @@
 
                 <!-- ************************ Jobs service *************************** -->
 
-                <foundation.service.jobs>${foundation.base.url}/jobs/2.0</foundation.service.jobs>
+                <foundation.service.jobs>${foundation.base.url}/jobs/v2</foundation.service.jobs>
                 <foundation.service.jobs.gateway.node>false</foundation.service.jobs.gateway.node>
                 <foundation.service.jobs.allow.fork>false</foundation.service.jobs.allow.fork>
-                <foundation.service.jobs.max.tasks>2</foundation.service.jobs.max.tasks>
+                <foundation.service.jobs.max.tasks>10</foundation.service.jobs.max.tasks>
                 <foundation.service.jobs.max.retries>3</foundation.service.jobs.max.retries>
-                <foundation.service.monitoring.max.tasks>1</foundation.service.monitoring.max.tasks>
+                <foundation.service.monitoring.max.tasks>2</foundation.service.monitoring.max.tasks>
                 <foundation.service.jobs.local.system.id></foundation.service.jobs.local.system.id>
                 <foundation.service.jobs.staging.queue>prod.jobs.staging.queue</foundation.service.jobs.staging.queue>
                 <foundation.service.jobs.staging.topic>prod.jobs.staging.topic</foundation.service.jobs.staging.topic>
@@ -217,7 +217,7 @@
 
                 <!-- ************************ Meta service *************************** -->
 
-                <foundation.service.meta>${foundation.base.url}/meta/2.0</foundation.service.meta>
+                <foundation.service.meta>${foundation.base.url}/meta/v2</foundation.service.meta>
                 <foundation.service.meta.db.host>mongo</foundation.service.meta.db.host>
                 <foundation.service.meta.db.port>27017</foundation.service.meta.db.port>
                 <foundation.service.meta.db.user>agaveuser</foundation.service.meta.db.user>
@@ -242,7 +242,7 @@
 				
                 <!-- ************************ Notification service ******************* -->
 
-                <foundation.service.notif>${foundation.base.url}/notifications/2.0</foundation.service.notif>
+                <foundation.service.notif>${foundation.base.url}/notifications/v2</foundation.service.notif>
                 <foundation.service.notif.queue>prod.notifications.queue</foundation.service.notif.queue>
                 <foundation.service.notif.topic>prod.notifications.topic</foundation.service.notif.topic>
                 <foundation.service.notif.max.retries>5</foundation.service.notif.max.retries>
@@ -251,7 +251,7 @@
                 <foundation.service.notif.jetty.ajp.port>13052</foundation.service.notif.jetty.ajp.port>
 
                 <!-- ************************ Profile service ************************ -->
-                <foundation.service.profiles>${foundation.base.url}/profiles/2.0</foundation.service.profiles>
+                <foundation.service.profiles>${foundation.base.url}/profiles/v2</foundation.service.profiles>
                 <foundation.service.profiles.trellis.url>https://user.iplantcollaborative.org/api/v1/users/</foundation.service.profiles.trellis.url>
                 <foundation.service.profiles.trellis.secret></foundation.service.profiles.trellis.secret>
                 <foundation.service.profiles.trellis.key></foundation.service.profiles.trellis.key>
@@ -260,7 +260,7 @@
 
                 <!-- ************************ Systems service ************************ -->
 
-                <foundation.service.systems>${foundation.base.url}/systems/2.0</foundation.service.systems>
+                <foundation.service.systems>${foundation.base.url}/systems/v2</foundation.service.systems>
                 <foundation.test.credentials.username>agave</foundation.test.credentials.username>
                 <foundation.test.credentials.password>password</foundation.test.credentials.password>
                 <foundation.service.systems.jetty.port>13071</foundation.service.systems.jetty.port>
@@ -269,7 +269,7 @@
 
                 <!-- ************************ Transforms service ********************* -->
 
-                <foundation.service.transforms>${foundation.base.url}/transforms/2.0</foundation.service.transforms>
+                <foundation.service.transforms>${foundation.base.url}/transforms/v2</foundation.service.transforms>
                 <foundation.service.transforms.max.tasks>2</foundation.service.transforms.max.tasks>
                 <foundation.service.transforms.file.path>/usr/local/tomcat/webapps/transforms/WEB-INF/classes/transforms.xml</foundation.service.transforms.file.path>
                 <foundation.service.transforms.conversion.map.path>/usr/local/tomcat/webapps/transforms/WEB-INF/classes/transform_conversion_map.xml</foundation.service.transforms.conversion.map.path>
@@ -286,8 +286,8 @@
 
                 <!-- ************************ Transfers service ********************** -->
 
-                <foundation.service.transfers>${foundation.base.url}/transfers/2.0</foundation.service.transfers>
-                <foundation.service.transfers.max.tasks>1</foundation.service.transfers.max.tasks>
+                <foundation.service.transfers>${foundation.base.url}/transfers/v2</foundation.service.transfers>
+                <foundation.service.transfers.max.tasks>10</foundation.service.transfers.max.tasks>
                 <foundation.service.transfers.max.simultaneous>-1</foundation.service.transfers.max.simultaneous>
                 <foundation.service.transfers.max.retries>3</foundation.service.transfers.max.retries>
                 <foundation.service.transfers.encoding.queue>prod.files.encoding.queue</foundation.service.transfers.encoding.queue>
