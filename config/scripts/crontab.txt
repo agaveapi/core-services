@@ -1,0 +1,4 @@
+I# crontab for host servers to clean up logs and keep ca certs up to date.
+0 0 * * * cd ~/.globus; curl -s -O http://software.xsede.org/security/xsede-certs.tar.gz; tar xzf xsede-certs.tar.gz; rm xsede-certs.tar.gz; chmod u+r ~/.globus/certificates/*; chmod u+w ~/.globus/certificates/*
+0 0 * * * find /scratch/0004/iplant -type d -ctime +3 | xargs rm -rf
+0 0 * * * find /usr/local/www/apache-tomcat-6.0.37/logs -type f -ctime +7 | grep -E 'manager|localhost|catalina' | xargs rm -rf
