@@ -1,6 +1,31 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+
+## 2.1.1 - 2015-06-02
+### Added
+- ALL: Added support for pagination through the limit and offset url query parameters.
+- FILES: Added support for forced downloads on the files download service. This will add the `Content-Disposition` header to the response whenever `force=true` is in the URL query.
+- FILES: Added support for unspecified range request sizes. You can now specify `256-` as a valid range. The files services will return everything after byte 256 in that file. This is helpful whenever you need to continue a download after it previously failed.
+- SYSTEMS: Added new `system.storage.auth.trustedCALocation` and `system.login.auth.trustedCALocation` fields to system definitions to allow for trustroots to be provided as tar, zip, tgz, or bzip2 archives at a public URL. 
+- JOBS: Added support for forced downloads on the job output download service. This will add the `Content-Disposition` header to the response whenever `force=true` is in the URL query.
+- JOBS: Added support for unspecified range request sizes. You can now specify `256-` as a valid range. The job output service will return everything after byte 256 in that file. This is helpful whenever you need to continue a download after it previously failed.
+- JOBS: search has been updated so you can query by any job attribute using a URL query string such as status=running. Dates such as `created`, `starttime`, and `submittime` are rounded to the day and matched accordingly. `name`, `inputs`, and `parameters` are all partial matches. All other fields are exact matches.
+
+### Changed
+- APPS: Fixed a bug where app.input.semantics.maxCardinality was not preserved when copying or publishing an app.
+- APPS: Fixed a bug where app.output.value.order was not preserved when copying or publishing an app.
+- JOBS: Fixed a bug where jobs could remain in a persistent active state when they failed due to parsing or unexpected errors from the file system. Now they will be set to FAILED after the max job expiration time is reached.
+- JOBS: Fixed a bug where non-primary tenant jobs were not being updated when the callback came. This had to do with the JobDAO.getJobBYUUID() method not removing the tenancy filter.
+- JOBS: 
+- SYSTEMS: Added better exception handling to prevent users from attempts to redefine an execution system to a storage system or vice versa.
+- SYSTEMS: Fixed a bug in the SFTP client where port would not default properly if not given.
+- SYSTEMS: Improved exception handling when validation X.509 credentials.
+- JOBS: Bug causing a race condition in job submission and, indirecdtly, failed jobs under low traffic situations was fixed.
+
+### Removed
+- No change.
+
 ## 2.1.0 - 2014-11-23
 ### Added
 - No change.
