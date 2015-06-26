@@ -39,3 +39,4 @@ fabfile.pyc
 test-output
 cache
 config/ssl
+docker

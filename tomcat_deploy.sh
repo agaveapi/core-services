@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # cd $HOME/agave
-# 
+#
 # git pull
-# 
+#
 # git submodule update
-# 
+#
  mvn -Dskip.integration.tests=true -Dmaven.test.skip=true -Dforce.check.update=false -Dforce.check.version=false -s config/maven/settings.xml clean install
 #mvn -Dskip.integration.tests=true -Dmaven.test.skip=true -Dforce.check.update=false -Dforce.check.version=false clean install
 
@@ -35,5 +35,5 @@ $CATALINA_HOME/bin/kill.sh
 # $CATALINA_HOME/bin/startup.sh
 
 #service tomcat restart
-
+export JAVA_OPTS="-Djsse.enableCBCProtection=false $JAVA_OPTS"
 tail -f $CATALINA_HOME/logs/catalina.out
