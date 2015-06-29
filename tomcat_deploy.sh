@@ -6,8 +6,8 @@
 #
 # git submodule update
 #
- mvn -Dskip.integration.tests=true -Dmaven.test.skip=true -Dforce.check.update=false -Dforce.check.version=false -s config/maven/settings.xml clean install
-#mvn -Dskip.integration.tests=true -Dmaven.test.skip=true -Dforce.check.update=false -Dforce.check.version=false clean install
+# mvn -Dskip.integration.tests=true -Dmaven.test.skip=true -Dforce.check.update=false -Dforce.check.version=false -s config/maven/settings.xml clean install
+# mvn -Dforce.check.version=false clean install
 
 # deploy swagger docs to apach web root
 mkdir /var/www/html/v2
