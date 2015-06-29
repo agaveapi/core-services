@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2.1.2 - 2015-06-02
+## 2.1.2 - 2015-06-29
 ### Added
 - ALL: Added iplant.dedicated.tenant.id configuration setting to enable the restriction of a worker to a particular tenant.
 - ALL: Added iplant.drain.all.queues configuration setting to tell a worker to stop accepting new tasks.  
@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - JOBS: Added reaper thread to roll back zombie archiving jobs that have not updated in several minutes. This will grow out to handle all zombie tasks.
 - SYSTEMS: Added full support for FTP storage systems. Both authenticated and anonymous FTP is supported. Use FTP for the system.storage.protocol value and ANONYMOUS or PASSWORD for the system.storage.auth.type value.
 - SYSTEMS: Added system.[storage,login].auth.caCerts field to x509 auth configurations to allow the importing of a trustroot archive from a public URL. This allows users to provide self-signed credentials for their private infrastructure and still access them from Agave. Each system's auth config trustroots are sandboxed and fetched as needed.
+- NOTIFICATIONS: Added support for authenticated SMTP servers and HTML email.
 
 ### Changed
 - JOBS: Updated search query to accept comma-delimited lists of search values.
@@ -18,7 +19,7 @@ All notable changes to this project will be documented in this file.
 - JOBS: Updated search query to allow data ranges to be preceded by a comparator such that you can specify created=(2014-12-01,today) 
 > /jobs/v2/?executionsystem.like=stampede&runtime.gt=86400  
 > /jobs/v2/?submittime.on=yesterday&appid.like=bwa  
-> 
+
 - FILES: Rewrote a portion of the jglobus library to support multiple truststore locations and concurrent, multiuser scenarios. 
 - FILES: Fixed a bug where the root of public systems could not be viewed by admins.
 - FILES: Fixed bug where staging and encoding tasks could not get an optimistic lock.
@@ -27,11 +28,11 @@ All notable changes to this project will be documented in this file.
 - SYSTEMS: Updated URLCopy to use a relay transfer rather than a proxy transfer when file size is under 2GB. This allows for speedups from striping, etc in certain situations.
 - SYSTEMS: Updated URLCopy to roll back and cancel transfer task groups when a transfer is cancelled from another thread.
 - SYSTEMS: Fixed bug preventing MyProxy from retrieving certs from unknown, self-signed servers.
-* SYSTEMS: Fixed S3 support, optimizing uploads and downloads using chunked transfers.
-* SYSTEMS: Fixed bug in HTTP imports where some url parameters were not forwarded to the download client.
-* TRANSFORMS: Fixed bug where decoding tasks could not get an optimistic lock.
-* TRANSFORMS: Updated queue workers to track data movement.
-* TRANSFORMS: Fixed bug where tenancy was not honored on callbacks.
+- SYSTEMS: Fixed S3 support, optimizing uploads and downloads using chunked transfers.
+- SYSTEMS: Fixed bug in HTTP imports where some url parameters were not forwarded to the download client.
+- TRANSFORMS: Fixed bug where decoding tasks could not get an optimistic lock.
+- TRANSFORMS: Updated queue workers to track data movement.
+- TRANSFORMS: Fixed bug where tenancy was not honored on callbacks.
 
 ### Removed
 - Disabling of apps if the assets disappear temporarily. 
