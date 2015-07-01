@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - NOTIFICATIONS: Added support for authenticated SMTP servers and HTML email.
 
 ### Changed
+- APPS: Fixed bug in permission checks of app assets where checks would fail if an absolute path was not given on public systems.
 - JOBS: Updated search query to accept comma-delimited lists of search values.
 > /jobs/v2/?status.in=RUNNING,SUBMITTING,ARCHIVING   
 > /jobs/v2/?endtime.after=2015-01-17&endtime.before=today
