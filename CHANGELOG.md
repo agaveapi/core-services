@@ -26,7 +26,7 @@ All notable changes to this project will be documented in this file.
 - FILES: Fixed bug where staging and encoding tasks could not get an optimistic lock.
 - JOBS: Rewrote job queues to handle concurrency and failures a bit better. Conflicts seem to be isolated at tests up to 10 simultaneous workers.
 - SYSTEMS: Updated URLCopy, TransferTask, and RemoteTransferListener to catch content updates in real time.
-- SYSTEMS: Updated URLCopy to use a relay transfer rather than a proxy transfer when file size is under 2GB. This allows for speedups from striping, etc in certain situations.
+- SYSTEMS: Updated URLCopy to use a relay transfer rather than a proxy transfer when file size is under 6GB. This allows for speedups from striping, etc in certain situations.
 - SYSTEMS: Updated URLCopy to roll back and cancel transfer task groups when a transfer is cancelled from another thread.
 - SYSTEMS: Fixed bug preventing MyProxy from retrieving certs from unknown, self-signed servers.
 - SYSTEMS: Fixed S3 support, optimizing uploads and downloads using chunked transfers.
@@ -34,6 +34,8 @@ All notable changes to this project will be documented in this file.
 - TRANSFORMS: Fixed bug where decoding tasks could not get an optimistic lock.
 - TRANSFORMS: Updated queue workers to track data movement.
 - TRANSFORMS: Fixed bug where tenancy was not honored on callbacks.
+- POSTITS: Fixed parameterization bug preventing CD
+- USAGE: Fixed parameterization bug preventing CD
 
 ### Removed
 - Disabling of apps if the assets disappear temporarily. 
