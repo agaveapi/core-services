@@ -1,0 +1,17 @@
+{
+  "appId": "app--histogram2--system-exec--bugaboo-westgrid-ca-jeromej-1.00",
+  "archive": false,
+  "archiveSystem": "system-staging-dev-irmacs-dev-jeromej",
+  "batchQueue": "pre",
+  "inputs": {
+      "file1": "agave://system-staging-dev-irmacs-dev-jeromej/2015-06-09_16-50-13_55777bb600697/data.csv.zip"
+  },
+  "maxRunTime": "00:10:00",
+  "name": "ignore-test",
+  "parameters": {
+      "blue": 0,
+      "green": "0.5",
+      "param1": "cdr3_length",
+      "red": 1
+  }
+}
