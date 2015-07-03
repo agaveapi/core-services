@@ -213,6 +213,7 @@
 				<foundation.service.dedicated.tenant></foundation.service.dedicated.tenant>
 				<foundation.service.drain.all.queues>false</foundation.service.drain.all.queues>
 				
+				
 				<!-- *********************************************************************
 				**								PHP services 							**
 				***********************************************************************-->
@@ -327,7 +328,8 @@
 				<foundation.service.transfers.max.retries>3</foundation.service.transfers.max.retries>
 				<foundation.service.transfers.jetty.port>13091</foundation.service.transfers.jetty.port>
 				<foundation.service.transfers.jetty.ajp.port>13092</foundation.service.transfers.jetty.ajp.port>
-
+				<foundation.service.transfers.max.relay.size>2</foundation.service.transfers.max.relay.size>
+				<foundation.service.transfers.allow.relays>true</foundation.service.transfers.allow.relays>
 			</properties>
 		</profile>
 	</profiles>
