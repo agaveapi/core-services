@@ -6,14 +6,20 @@ All notable changes to this project will be documented in this file.
 - ALL: Added iplant.dedicated.tenant.id configuration setting to enable the restriction of a worker to a particular tenant.
 - ALL: Added iplant.drain.all.queues configuration setting to tell a worker to stop accepting new tasks.  
 - ALL: Added quartz workers endpoint to legacy APIs to monitor worker tasks
+- ALL: Added printing of JWT JSON as well as header when the `debugjwt` url parameter is defined.
 - JOBS: Added reaper thread to roll back zombie archiving jobs that have not updated in several minutes. This will grow out to handle all zombie tasks.
 - SYSTEMS: Added full support for FTP storage systems. Both authenticated and anonymous FTP is supported. Use FTP for the system.storage.protocol value and ANONYMOUS or PASSWORD for the system.storage.auth.type value.
-- SYSTEMS: Added system.[storage,login].auth.caCerts field to x509 auth configurations to allow the importing of a trustroot archive from a public URL. This allows users to provide self-signed credentials for their private infrastructure and still access them from Agave. Each system's auth config trustroots are sandboxed and fetched as needed.
+- SYSTEMS: Added system.[storage,login].auth.caCerts field to x509 auth configurations to allow the importing of a trustroot archive from a public URL. This allows users to provide self-signed credentials for their private infrastructure and still access them from Agave. Each system's auth config trustroots are sandboxed and fetched as needed. Archive can be in zip, tar, bzip2, tgz, tar.gz, tar.bz2, or jar format.
 - NOTIFICATIONS: Added support for authenticated SMTP servers and HTML email.
 
+
 ### Changed
+- ALL: Updated myproxy to support  and fall back on TLS automatically.
+- APPS: Fixed bug in app registration where apps would not save due to a uniqueness constraint failure.
+- APPS: Fixed bug in app update endpoint where the app would not save due to the id not being resolved properly.
 - APPS: Fixed bug in permission checks of app assets where checks would fail if an absolute path was not given on public systems.
 - JOBS: Fixed bug in job status worker where concurrency collisions were not being caught. This prevented Condor jobs from updating.
+- JOBS: Fixed bug in job staging worker where job would fail due to a StaleObjectException if more than one input was present. This was caused by the transfer task associated with the staging job event being updated as a separate entity during the execution of the `URLCopy.copy()` method. When the method returned, the original reference to the trnasfer task was still referenced in the job event. Because we had a `Cascade={ALL,DELETE}` annotation on the association, persistence failed due to the stale transfer task. This was corrected by changing the annotation field to `Cascade={DELETE}`. Since we manage transfer tasks independently, this is completely safe. 
 - JOBS: Updated search query to accept comma-delimited lists of search values.
 > /jobs/v2/?status.in=RUNNING,SUBMITTING,ARCHIVING   
 > /jobs/v2/?endtime.after=2015-01-17&endtime.before=today
