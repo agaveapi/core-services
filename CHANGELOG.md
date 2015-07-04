@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 - SYSTEMS: Added full support for FTP storage systems. Both authenticated and anonymous FTP is supported. Use FTP for the system.storage.protocol value and ANONYMOUS or PASSWORD for the system.storage.auth.type value.
 - SYSTEMS: Added system.[storage,login].auth.caCerts field to x509 auth configurations to allow the importing of a trustroot archive from a public URL. This allows users to provide self-signed credentials for their private infrastructure and still access them from Agave. Each system's auth config trustroots are sandboxed and fetched as needed. Archive can be in zip, tar, bzip2, tgz, tar.gz, tar.bz2, or jar format.
 - NOTIFICATIONS: Added support for authenticated SMTP servers and HTML email.
-
+- JOBS, TRANSFORMS: Added reaper thread to clean up zombie jobs across the platform.
 
 ### Changed
 - ALL: Updated myproxy to support  and fall back on TLS automatically.
