@@ -1,6 +1,25 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.3 - 2015-07-09
+### Added
+- SYSTEMS: added system batch queues as a formal resource with independent crud api /systems/<id>/queues. With the expanded format, queue descriptions will include and additional `load` object which describes the current load on a queue in terms of Agave usage.
+- SYSTEMS: added `system.load` object which describes the current load on a system in terms of Agave usage.
+- JOBS, TRANSFORMS: Added reaper thread to clean up zombie jobs across the platform.
+
+
+### Changed
+- ALL: AgaveUUID class was updated to avoid collisions when accessed within 100 nanoseconds. 
+- JOBS: refactored worker processes so they are largely self-healing in the even the container is closed. Now any running processes will be rolled back to their previous state and resubmitted to the queue for pick up by another worker.
+- SYSTEMS: Updated transfer classes to support graceful termination due to shutdown or thread interruption.
+- SYSTEMS: Fixed bug in 3rd party transfers preventing total data moved from writing to the logs.
+- POSTITS, LOGGING, TENANTS, USAGE: Fixed parameterization of the config files to inject the proper runtime values upon maven build.
+
+
+### Removed
+- nothing
+
+
 ## 2.1.2 - 2015-06-29
 ### Added
 - ALL: Added iplant.dedicated.tenant.id configuration setting to enable the restriction of a worker to a particular tenant.
@@ -11,7 +30,7 @@ All notable changes to this project will be documented in this file.
 - SYSTEMS: Added full support for FTP storage systems. Both authenticated and anonymous FTP is supported. Use FTP for the system.storage.protocol value and ANONYMOUS or PASSWORD for the system.storage.auth.type value.
 - SYSTEMS: Added system.[storage,login].auth.caCerts field to x509 auth configurations to allow the importing of a trustroot archive from a public URL. This allows users to provide self-signed credentials for their private infrastructure and still access them from Agave. Each system's auth config trustroots are sandboxed and fetched as needed. Archive can be in zip, tar, bzip2, tgz, tar.gz, tar.bz2, or jar format.
 - NOTIFICATIONS: Added support for authenticated SMTP servers and HTML email.
-- JOBS, TRANSFORMS: Added reaper thread to clean up zombie jobs across the platform.
+
 
 ### Changed
 - ALL: Updated myproxy to support  and fall back on TLS automatically.
