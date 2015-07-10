@@ -135,7 +135,7 @@
 				<foundation.db.host>mysql</foundation.db.host>
 				<foundation.db.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
 				<foundation.db.driver>com.mysql.jdbc.Driver</foundation.db.driver>
-				<foundation.db.database>agave</foundation.db.database>
+				<foundation.db.database>agave-api</foundation.db.database>
 				<foundation.db.username>agaveuser</foundation.db.username>
 				<foundation.db.password>password</foundation.db.password>
 				<foundation.db.auth.table>authentication_tokens</foundation.db.auth.table>
