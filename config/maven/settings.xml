@@ -131,7 +131,7 @@
 
 				<!-- *************************** Database **************************** -->
 				<foundation.db.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.jndi.connection>
-				<foundation.db.url>jdbc:mysql://mysql:3306/agave?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
+				<foundation.db.url>jdbc:mysql://mysql:3306/agave-api?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
 				<foundation.db.host>mysql</foundation.db.host>
 				<foundation.db.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
 				<foundation.db.driver>com.mysql.jdbc.Driver</foundation.db.driver>
@@ -211,8 +211,10 @@
 				<foundation.service.documentation>https://docker.example.com/v2/docs</foundation.service.documentation>
 
 				<foundation.service.dedicated.tenant></foundation.service.dedicated.tenant>
+				<foundation.service.dedicated.users></foundation.service.dedicated.users>
+				<foundation.service.dedicated.systems></foundation.service.dedicated.systems>
+				<foundation.service.dedicated.queues></foundation.service.dedicated.queues>
 				<foundation.service.drain.all.queues>false</foundation.service.drain.all.queues>
-				
 				
 				<!-- *********************************************************************
 				**								PHP services 							**
@@ -282,11 +284,22 @@
 				<foundation.service.meta.jetty.ajp.port>13042</foundation.service.meta.jetty.ajp.port>
 
 
+				<!-- ************************ Monitor service ******************* -->
+				
+				<foundation.service.monitor>${foundation.base.url}/monitor/v2</foundation.service.monitor>
+				<foundation.service.monitor.queue>dev.monitors.queue</foundation.service.monitor.queue>
+				<foundation.service.monitor.topic>dev.monitors.topic</foundation.service.monitor.topic>
+				<foundation.service.montior.max.q.failures>5</foundation.service.montior.max.q.failures>
+				<foundation.service.monitor.max.retries>1</foundation.service.monitor.max.retries>
+				<foundation.service.monitor.max.tasks>2</foundation.service.monitor.max.tasks>
+				<foundation.service.monitor.jetty.port>13051</foundation.service.monitor.jetty.port>
+				<foundation.service.monitor.jetty.ajp.port>13052</foundation.service.monitor.jetty.ajp.port>
+				
 				<!-- ************************ Notification service ******************* -->
 
 				<foundation.service.notif>${foundation.base.url}/notifications/v2</foundation.service.notif>
-				<foundation.service.notif.queue>prod.notifications.queue</foundation.service.notif.queue>
-				<foundation.service.notif.topic>prod.notifications.topic</foundation.service.notif.topic>
+				<foundation.service.notif.queue>dev.notifications.queue</foundation.service.notif.queue>
+				<foundation.service.notif.topic>dev.notifications.topic</foundation.service.notif.topic>
 				<foundation.service.notif.max.retries>5</foundation.service.notif.max.retries>
 				<foundation.service.notif.max.tasks>1</foundation.service.notif.max.tasks>
 				<foundation.service.notif.jetty.port>13051</foundation.service.notif.jetty.port>
