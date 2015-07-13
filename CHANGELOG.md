@@ -1,12 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2.1.3 - 2015-07-09
+## 2.1.3 - 2015-07-13
 ### Added
 - SYSTEMS: added system batch queues as a formal resource with independent crud api /systems/<id>/queues. With the expanded format, queue descriptions will include and additional `load` object which describes the current load on a queue in terms of Agave usage.
 - SYSTEMS: added `system.load` object which describes the current load on a system in terms of Agave usage.
 - JOBS, TRANSFORMS: Added reaper thread to clean up zombie jobs across the platform.
-
+_ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories by specifying their URI. Agave resolves them internally, verifies access rights, and resolves them to their current system and path. For users with access to a job, but not the system, the remote system is modified to use the job work directory as they system root, thus isolating their ability to access any other data.
 
 ### Changed
 - ALL: AgaveUUID class was updated to avoid collisions when accessed within 100 nanoseconds. 
@@ -14,7 +14,8 @@ All notable changes to this project will be documented in this file.
 - SYSTEMS: Updated transfer classes to support graceful termination due to shutdown or thread interruption.
 - SYSTEMS: Fixed bug in 3rd party transfers preventing total data moved from writing to the logs.
 - POSTITS, LOGGING, TENANTS, USAGE: Fixed parameterization of the config files to inject the proper runtime values upon maven build.
-
+- JOBS: lot of concurrency tests replicating production quartz behavior.
+- JOBS, SYSTEMS: leveraging a new threadsafe approach to passing tasks through the API. 
 
 ### Removed
 - nothing
