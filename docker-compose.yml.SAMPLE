@@ -1,0 +1,396 @@
+proxy:
+  image: agaveapi/apache-api-proxy:latest
+  name: api
+  hostname: api.staging.agaveapi.co
+  ports:
+    - '80'
+  restart: always
+  privileged: true
+  environment:
+    - 'INTERLOCK_DATA={"hostname": "api", "domain": "staging.agaveapi.co", "alias_domains": ["api.docker.example.com"], "warm": false, "port":80}'
+lb:
+  image: 'ehazlett/interlock:latest'
+  command: ' --swarm-url "tcp://192.168.59.103:2375" --plugin haproxy --debug start'
+  ports:
+    - '80:8080'
+  environment:
+    - 'HAPROXY_PROXY_BACKEND_OVERRIDE_ADDRESS=192.168.59.103'
+
+mysql:
+  image: deardooley/mysql
+  hostname: db.staging.agaveapi.co
+  ports:
+    - '3311:3306'
+  restart: always
+  environment:
+    - 'MYSQL_DATABASE=agave-api'
+    - 'MYSQL_USER=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_ROOT_PASSWORD=mysecretpassword'
+
+mongo:
+  image: mongo:2.6
+  command: --smallfiles
+  name: nosql.staging.agaveapi.co
+  ports:
+    - '27017:27017'
+  restart: always
+
+beanstalk:
+  image: agaveapi/beanstalkd
+  hostname: api.staging.agaveapi.co
+  ports:
+    - '11300:11300'
+  restart: always
+
+jobs:
+  image: agaveapi/jobs-api:2.1.3
+  command: bin/catalina.sh run 2>&1
+  hostname: jobs.api.staging.agaveapi.co
+  name: jobs
+  ports:
+    - "8080"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "hostname": "jobs", "domain": "api.staging.agaveapi.co", "alias_domains": ["jobs.api.docker.example.com"], "warm": false, "port":80}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_MAX_STAGING_TASKS=2'
+    - 'IPLANT_MAX_ARCHIVE_TASKS=2'
+    - 'IPLANT_MAX_SUBMISSION_TASKS=2'
+    - 'IPLANT_MAX_MONITORING_TASKS=1'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+files:
+  image: agaveapi/files-api:2.1.3
+  command: bin/catalina.sh run 2>&1
+  hostname: files.api.staging.agaveapi.co
+  name: files
+  ports:
+    - "8080"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "hostname": "files", "domain": "api.staging.agaveapi.co", "alias_domains": ["files.api.docker.example.com"], "warm": false, "port":80}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_SLAVE_MODE=true'
+    - 'IPLANT_MAX_STAGING_TASKS=10'
+    - 'IPLANT_MAX_TRANSFORM_TASKS=2'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+
+apps:
+  image: agaveapi/apps-api:2.1.3
+  command: bin/catalina.sh run 2>&1
+  hostname: apps.api.staging.agaveapi.co
+  name: apps
+  ports:
+    - "8080"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "hostname": "apps", "domain": "api.staging.agaveapi.co", "alias_domains": ["apps.api.docker.example.com"], "warm": false, "port":80}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+
+systems:
+  image: agaveapi/systems-api:2.1.3
+  command: bin/catalina.sh run 2>&1
+  hostname: systems.api.staging.agaveapi.co
+  name: systems
+  ports:
+    - "8080"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "hostname": "systems", "domain": "api.staging.agaveapi.co", "alias_domains": ["systems.api.docker.example.com"], "warm": false, "port":80}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+
+monitors:
+  image: agaveapi/monitors-api:2.1.3
+  command: bin/catalina.sh run 2>&1
+  hostname: monitors.api.staging.agaveapi.co
+  name: monitors
+  ports:
+    - "8080"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "hostname": "monitors", "domain": "api.staging.agaveapi.co", "alias_domains": ["monitors.api.docker.example.com"], "warm": false, "port":80}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+
+metadata:
+  image: agaveapi/metadata-api:2.1.3
+  command: bin/catalina.sh run 2>&1
+  hostname: metadata.api.staging.agaveapi.co
+  name: metadata
+  ports:
+    - "8080"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "hostname": "metadata", "domain": "api.staging.agaveapi.co", "alias_domains": ["metadata.api.docker.example.com"], "warm": false, "port":80}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+
+notifications:
+  image: agaveapi/notifications-api:2.1.3
+  hostname: notifications
+  ports:
+    - "80"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "warm": false, "port":80, "domain": "api.staging.agaveapi.co", "alias_domains": ["notifications.api.docker.example.com"]}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+    - 'IPLANT_MAX_NOTIFICATION_TASKS=0'
+
+transforms:
+  image: agaveapi/transforms-api:2.1.3
+  command: bin/catalina.sh run 2>&1
+  hostname: transforms.api.staging.agaveapi.co
+  name: transforms
+  ports:
+    - "8080"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "hostname": "transforms", "domain": "api.staging.agaveapi.co", "alias_domains": ["transforms.api.docker.example.com"], "warm": false, "port":80}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_MAX_STAGING_TASKS=2'
+    - 'IPLANT_MAX_ARCHIVE_TASKS=2'
+    - 'IPLANT_MAX_SUBMISSION_TASKS=2'
+    - 'IPLANT_MAX_MONITORING_TASKS=1'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+
+
+jobsworker:
+  image: agaveapi/jobs-api:2.1.3
+  name: jobsworker
+  ports:
+    - "80"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "warm": false, "port":80, "domain": "worker.staging.agaveapi.co", "alias_domains": ["jobs.worker.docker.example.com"]}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_SLAVE_MODE=true'
+    - 'IPLANT_MAX_STAGING_TASKS=2'
+    - 'IPLANT_MAX_ARCHIVE_TASKS=2'
+    - 'IPLANT_MAX_SUBMISSION_TASKS=2'
+    - 'IPLANT_MAX_MONITORING_TASKS=1'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+
+notificationsworker:
+  image: agaveapi/notifications-api:2.1.3
+  name: notificationsworker
+  ports:
+    - "80"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={ "warm": false, "port":80, "domain": "worker.staging.agaveapi.co", "alias_domains": ["notifications.worker.docker.example.com"]}'
+    - 'MYSQL_HOST=db.staging.agaveapi.co'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+    - 'IPLANT_LOG_SERVICE=logging.api.staging.agaveapi.co/v2/logging'
+    - 'IPLANT_MESSAGING_HOST=queue.staging.agaveapi.co'
+    - 'IPLANT_MESSAGING_PORT=11300'
+    - 'IPLANT_SLAVE_MODE=true'
+    - 'IPLANT_DEDICATED_TENANT_ID='
+    - 'IPLANT_DRAIN_ALL_QUEUES=false'
+    - 'MAIL_SMTPS_HOST=smtp.sendgrid.net'
+    - 'MAIL_SMTPS_AUTH=true'
+    - 'MAIL_SMTPS_PORT=587'
+    - 'MAIL_SMTPS_USER=<USERNAME>'
+    - 'MAIL_SMTPS_PWD=<PASSWORD>
+    - 'MAIL_SMTPS_FROM_NAME="Agave Sandbox"'
+    - 'MAIL_SMTPS_FROM_ADDRESS="dev-no-reply@example.com"'
+    - 'IPLANT_MAX_NOTIFICATION_TASKS=1'
+
+
+postits:
+  image: agaveapi/postits-api:2.1.3
+  name: postits
+  ports:
+    - "80"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={"hostname": "postits", "domain": "api.staging.agaveapi.co", "alias_domains": ["postits.api.docker.example.com"], "warm": false, "port":80 }'
+    - 'MYSQL_HOST=db.staging.agaveapi.co:3311'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+usage:
+  image: agaveapi/usage-api:2.1.3
+  name: usage
+  hostname: usage.api.staging.agaveapi.co
+  ports:
+    - "80"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={"hostname": "usage", "domain": "api.staging.agaveapi.co", "alias_domains": ["usage.api.docker.example.com"], "warm": false, "port":80 }'
+    - 'MYSQL_HOST=db.staging.agaveapi.co:3311'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+
+tenants:
+  image: agaveapi/tenants-api:2.1.3
+  name: logging
+  hostname: tenants.api.staging.agaveapi.co
+  ports:
+    - "80"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={"hostname": "tenants", "domain": "api.staging.agaveapi.co", "alias_domains": ["tenants.api.docker.example.com"], "warm": false, "port":80 }'
+    - 'MYSQL_HOST=db.staging.agaveapi.co:3311'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'
+
+logging:
+  image: agaveapi/logging-api:2.1.3
+  name: logging
+  hostname: logging.api.staging.agaveapi.co
+  ports:
+    - "80"
+  restart: always
+  environment:
+    - 'INTERLOCK_DATA={"domain": "api.staging.agaveapi.co", "alias_domains": ["logging.api.docker.example.com"], "warm": false, "port":80 }'
+    - 'MYSQL_HOST=db.staging.agaveapi.co:3311'
+    - 'MYSQL_PORT=3311'
+    - 'MYSQL_USERNAME=agaveuser'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=agave-api'

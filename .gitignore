@@ -38,6 +38,5 @@ fabfile.pyc
 # maven and eclipse malformed output test folders
 test-output
 cache
-config/ssl
-docker
 tutum
+docker-compose.yml
