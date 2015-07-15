@@ -1,6 +1,21 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+
+## 2.1.3 - 2015-07-14
+### Added
+- ALL: adding in Docker Compose file to bring up all core services, dependent services, and load balancer with routing built in. If using Swarm, this is sufficient for a scalable multihost setup.
+
+### Changed
+- nothing
+
+
+### Removed
+- Old fat container build
+- Deprecated `fig.xml` file
+- Deprecated tomcat and depenent service configs.
+
+
 ## 2.1.3 - 2015-07-13
 ### Added
 - SYSTEMS: added system batch queues as a formal resource with independent crud api /systems/<id>/queues. With the expanded format, queue descriptions will include and additional `load` object which describes the current load on a queue in terms of Agave usage.
