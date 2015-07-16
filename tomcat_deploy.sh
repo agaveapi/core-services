@@ -15,13 +15,13 @@ mkdir /var/www/html/v2
 chmod -R 755 /var/www/html/v2
 
 rm -rf /var/www/html/v2/docs
-ln -s $DIR/agave-apidocs/apidocs-api/target/docker /var/www/html/v2/docs
+ln -s $DIR/agave-apidocs/apidocs-api/target/docker/html /var/www/html/v2/docs
 chmod -R 755 /var/www/html/v2/docs
 
 # deploy php apps to apache web root
 for i in auth postits logging tenants usage; do
 	rm -rf /var/www/html/v2/$i
-	ln -s $DIR/agave-$i/$i-api/target/docker /var/www/html/v2/$i
+	ln -s $DIR/agave-$i/$i-api/target/docker/html /var/www/html/v2/$i
 	chmod -R 755 /var/www/html/v2/$i
 done
 
