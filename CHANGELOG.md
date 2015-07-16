@@ -2,12 +2,14 @@
 All notable changes to this project will be documented in this file.
 
 
-## 2.1.3 - 2015-07-14
+## 2.1.3 - 2015-07-16
 ### Added
 - ALL: adding in Docker Compose file to bring up all core services, dependent services, and load balancer with routing built in. If using Swarm, this is sufficient for a scalable multihost setup.
+- JOBS: Improved performance and reliability of monitoring processes
+- ALL: Added support for sending email using multiple clients. This lets us use SendGrid, MailGun, SMTP, PostFix, or optional log file printing of email notifications.
 
 ### Changed
-- nothing
+- JOBS: Fixed bug preventing job status updates from occuring during monitoring  processes when remote connectivity was needed.
 
 
 ### Removed

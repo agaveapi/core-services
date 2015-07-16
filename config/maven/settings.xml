@@ -83,7 +83,7 @@
 				<!-- *********************************************************************
 				**************************************************************************
 				**																																			**
-				**						Agave common properties 																	**
+				**						Agave common properties 						**
 				**																																			**
 				**************************************************************************
 				***********************************************************************-->
@@ -115,6 +115,7 @@
 				<foundation.ca.certs.path>/home/agave/.globus/certificates</foundation.ca.certs.path>
 
 				<!-- ********************** Email Properties ************************* -->
+				<foundation.smtp.provider>local</foundation.smtp.provider>
 				<foundation.smtp.user>agave</foundation.smtp.user>
 				<foundation.smtp.password></foundation.smtp.password>
 				<foundation.smtp.host>localhost</foundation.smtp.host>
