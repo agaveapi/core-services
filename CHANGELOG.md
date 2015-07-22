@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.3 - 2015-07-22
+### Added
+- nothing
+
+### Changed
+- JOBS: Fixed temporal job queries so searching by date range (ex `startTime.between=1 week ago,yesterday`, `endTime.between=2015-05-05 8:00,2015-05-05 12:00`) works as expected. 
+
+### Removed
+- nothing
+
 
 ## 2.1.3 - 2015-07-16
 ### Added
