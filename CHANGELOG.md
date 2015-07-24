@@ -3,10 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## 2.1.3 - 2015-07-22
 ### Added
-- nothing
+- ALL: HTML email notification support for all events. Email will be sent as both plain text and HTML.
 
 ### Changed
 - JOBS: Fixed temporal job queries so searching by date range (ex `startTime.between=1 week ago,yesterday`, `endTime.between=2015-05-05 8:00,2015-05-05 12:00`) works as expected. 
+- JOBS: Refactored queue processing into two schedulers, one for producer and the other consumer. Producers have a thread for each queue. Consumers have a generic pool of 25 threads to process new jobs and triggers created by the producers. Each quartz job has a key equal to the agave job uuid, thus quartz prevents duplication within a jvm. To prevent monopolization of the thread pool, the concurrent list of job ids is still kept in the producer and no new job will be created while the queue is at length Settings.MAX_XXXX_TASKS.
+- JOBS: Fixed a bug where job status queries were not refreshing quickly enough. This is an artifact of optimistic record locking used to prevent concurrency issues across distributed JVM. Each request will give a stale update at most one time, then instantly refresh with a new query to the DB.
 
 ### Removed
 - nothing
