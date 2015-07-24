@@ -79,6 +79,11 @@
 			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/snapshots</url>
 		</repository>
 		<repository>
+			<id>taccaci-thirdparty</id>
+			<name>TACC ACI Maven repository</name>
+			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/thirdparty</url>
+		</repository>
+		<repository>
 			<id>maven-restlet</id>
 			<name>Public online Restlet repository</name>
 			<url>https://maven.tacc.utexas.edu/nexus/content/repositories/maven-restlet/</url>
