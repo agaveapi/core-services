@@ -1,6 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.3 - 2015-07-24
+### Added
+- ALL: Updating formatting on HTML email templates to provide cleaner field descriptions and enforce newlines.
+- FILES: Added management UI for worker processes. This is identical to the one for the jobs API.
+
+### Changed
+- ALL: Fix a bug in notifiations preventing webhooks from sending due to messages not being able to be deserialized from the queue. [Issue 74](https://bitbucket.org/taccaci/agave/issues/74/job-notifications-are-not-sending)
+- FILES: Refactored file staging processing to reflect the same producer/consumer approach taken by the jobs api. This removes contention and guarantees no-conflict in a single host environment.
+
+### Removed
+- nothing
+
+
 ## 2.1.3 - 2015-07-22
 ### Added
 - ALL: HTML email notification support for all events. Email will be sent as both plain text and HTML.
