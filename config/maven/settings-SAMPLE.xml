@@ -13,6 +13,17 @@
 		<activeProfile>plain</activeProfile>
 	</activeProfiles>
 	
+	<servers>
+		<server>
+			<id>docker-registry</id>
+			<username>${user.name}</username>
+			<password>password</password>
+			<configuration>
+				<email>${user.name}@example.com</email>
+			</configuration>
+		</server>
+	</servers>
+	
 	<profiles>
 		<profile>
 				<!-- *********************************************************************
@@ -23,6 +34,7 @@
 						<force.check.update>false</force.check.update>
 						<force.check.version>false</force.check.version>
 						<skip.docker.build>true</skip.docker.build>
+						<skip.docker.tag>true</skip.docker.tag>
 						<skip.utest.docker.build>true</skip.utest.docker.build>
 						<skip.utest.docker.run>true</skip.utest.docker.run>
 						<skip.create-db>true</skip.create-db>
@@ -40,6 +52,7 @@
 						<force.check.update>false</force.check.update>
 						<force.check.version>false</force.check.version>
 						<skip.docker.build>false</skip.docker.build>
+						<skip.docker.tag>true</skip.docker.tag>
 						<skip.utest.docker.build>true</skip.utest.docker.build>
 						<skip.utest.docker.run>true</skip.utest.docker.run>
 						<skip.create-db>true</skip.create-db>
@@ -57,10 +70,12 @@
 						<force.check.update>false</force.check.update>
 						<force.check.version>false</force.check.version>
 						<skip.docker.build>false</skip.docker.build>
+						<skip.docker.tag>true</skip.docker.tag>
 						<skip.utest.docker.build>false</skip.utest.docker.build>
 						<skip.utest.docker.run>false</skip.utest.docker.run>
 						<skip.create-db>true</skip.create-db>
 						<skipTests>false</skipTests>
+						
 						<iplant.community.username>testuser</iplant.community.username>
 						<iplant.community.password>testuser</iplant.community.password>
 						<iplant.community.myproxy.server>docker.example.com</iplant.community.myproxy.server>
@@ -77,9 +92,32 @@
 				</properties>
 		</profile>
 		<profile>
+				<id>publish</id>
+				<!-- *********************************************************************
+				**	turns off tests and build of unit test container                    **
+				**	but keeps the api container build and enables image tagging and		**
+				**  push to the docker central registry                                 **
+				***********************************************************************-->
+				<properties>
+						<docker.registry.id>docker-registry</docker.registry.id>
+						<skip.docker.tag>false</skip.docker.tag>
+						<docker.registry.url>https://index.docker.io/v1/</docker.registry.url>
+						<docker.registry.username>agaveapi</docker.registry.username>
+						
+						<force.check.update>false</force.check.update>
+						<force.check.version>false</force.check.version>
+						<skip.docker.build>false</skip.docker.build>
+						<skip.utest.docker.build>true</skip.utest.docker.build>
+						<skip.utest.docker.run>true</skip.utest.docker.run>
+						<skip.create-db>true</skip.create-db>
+						<maven.test.skip>true</maven.test.skip>
+						<skipTests>true</skipTests>
+				</properties>
+		</profile>
+		<profile>
 			<id>agave</id>
 			<properties>
-
+				
 				<!-- *********************************************************************
 				**************************************************************************
 				**																																			**

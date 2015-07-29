@@ -1,6 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.4 - 2015-07-28
+### Added
+- ALL: Added an authenticated /runtimes endpoint to legacy java apis to allow viewing and editing of configs at runtime. This is rather moot since we're running containers, but it's helpful for steering and debugging.
+- JOBS: Added support for negative capacity isolation values by prefixing a system or username with an exclaimation point. For example, running a container with `-e IPLANT_DEDICATED_USER_ID=!dooley -e IPLANT_DEDICATED_TENANT_ID=tacc.prod`, will process everything for the `tacc.prod` tenant except jobs owned or associated with user `dooley`. It is ***NOT*** currently possible to mix and match inclusion and exclusion. Next up will be whitelists and blacklists for these properties.
+
+### Changed
+- ALL: Updating build system to build and publish Docker images tagged with the git commit hash, version, and update latest
+- ALL: Updated build flags to handle enabling/disabling pushing and naming.
+- ALL: Updated build system to publish direct to any Docker repo on deploy.
+- ALL: Updating Tomcat JNDI connection settings moving to DHCP Pool in an attempt to deal with some of the timeout and dead connection issues we've been having. To address this properly, we should split the APIs out to run without a 2nd level cache while the workers use the existing DAO.
+
+### Removed
+- nothing
+
 ## 2.1.3 - 2015-07-24
 ### Added
 - ALL: Updating formatting on HTML email templates to provide cleaner field descriptions and enforce newlines.
@@ -19,7 +33,7 @@ All notable changes to this project will be documented in this file.
 - ALL: HTML email notification support for all events. Email will be sent as both plain text and HTML.
 
 ### Changed
-- JOBS: Fixed temporal job queries so searching by date range (ex `startTime.between=1 week ago,yesterday`, `endTime.between=2015-05-05 8:00,2015-05-05 12:00`) works as expected. 
+- JOBS: Fixed temporal job queries so searching by date range (ex `startTime.between=1 week ago,yesterday`, `endTime.between=2015-05-05 8:00,2015-05-05 12:00`) works as expected.
 - JOBS: Refactored queue processing into two schedulers, one for producer and the other consumer. Producers have a thread for each queue. Consumers have a generic pool of 25 threads to process new jobs and triggers created by the producers. Each quartz job has a key equal to the agave job uuid, thus quartz prevents duplication within a jvm. To prevent monopolization of the thread pool, the concurrent list of job ids is still kept in the producer and no new job will be created while the queue is at length Settings.MAX_XXXX_TASKS.
 - JOBS: Fixed a bug where job status queries were not refreshing quickly enough. This is an artifact of optimistic record locking used to prevent concurrency issues across distributed JVM. Each request will give a stale update at most one time, then instantly refresh with a new query to the DB.
 
@@ -52,13 +66,13 @@ All notable changes to this project will be documented in this file.
 _ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories by specifying their URI. Agave resolves them internally, verifies access rights, and resolves them to their current system and path. For users with access to a job, but not the system, the remote system is modified to use the job work directory as they system root, thus isolating their ability to access any other data.
 
 ### Changed
-- ALL: AgaveUUID class was updated to avoid collisions when accessed within 100 nanoseconds. 
+- ALL: AgaveUUID class was updated to avoid collisions when accessed within 100 nanoseconds.
 - JOBS: refactored worker processes so they are largely self-healing in the even the container is closed. Now any running processes will be rolled back to their previous state and resubmitted to the queue for pick up by another worker.
 - SYSTEMS: Updated transfer classes to support graceful termination due to shutdown or thread interruption.
 - SYSTEMS: Fixed bug in 3rd party transfers preventing total data moved from writing to the logs.
 - POSTITS, LOGGING, TENANTS, USAGE: Fixed parameterization of the config files to inject the proper runtime values upon maven build.
 - JOBS: lot of concurrency tests replicating production quartz behavior.
-- JOBS, SYSTEMS: leveraging a new threadsafe approach to passing tasks through the API. 
+- JOBS, SYSTEMS: leveraging a new threadsafe approach to passing tasks through the API.
 
 ### Removed
 - nothing
@@ -82,16 +96,16 @@ _ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories
 - APPS: Fixed bug in app update endpoint where the app would not save due to the id not being resolved properly.
 - APPS: Fixed bug in permission checks of app assets where checks would fail if an absolute path was not given on public systems.
 - JOBS: Fixed bug in job status worker where concurrency collisions were not being caught. This prevented Condor jobs from updating.
-- JOBS: Fixed bug in job staging worker where job would fail due to a StaleObjectException if more than one input was present. This was caused by the transfer task associated with the staging job event being updated as a separate entity during the execution of the `URLCopy.copy()` method. When the method returned, the original reference to the trnasfer task was still referenced in the job event. Because we had a `Cascade={ALL,DELETE}` annotation on the association, persistence failed due to the stale transfer task. This was corrected by changing the annotation field to `Cascade={DELETE}`. Since we manage transfer tasks independently, this is completely safe. 
+- JOBS: Fixed bug in job staging worker where job would fail due to a StaleObjectException if more than one input was present. This was caused by the transfer task associated with the staging job event being updated as a separate entity during the execution of the `URLCopy.copy()` method. When the method returned, the original reference to the trnasfer task was still referenced in the job event. Because we had a `Cascade={ALL,DELETE}` annotation on the association, persistence failed due to the stale transfer task. This was corrected by changing the annotation field to `Cascade={DELETE}`. Since we manage transfer tasks independently, this is completely safe.
 - JOBS: Updated search query to accept comma-delimited lists of search values.
-> /jobs/v2/?status.in=RUNNING,SUBMITTING,ARCHIVING   
+> /jobs/v2/?status.in=RUNNING,SUBMITTING,ARCHIVING
 > /jobs/v2/?endtime.after=2015-01-17&endtime.before=today
 
-- JOBS: Updated search query to allow data ranges to be preceded by a comparator such that you can specify created=(2014-12-01,today) 
+- JOBS: Updated search query to allow data ranges to be preceded by a comparator such that you can specify created=(2014-12-01,today)
 > /jobs/v2/?executionsystem.like=stampede&runtime.gt=86400  
 > /jobs/v2/?submittime.on=yesterday&appid.like=bwa  
 
-- FILES: Rewrote a portion of the jglobus library to support multiple truststore locations and concurrent, multiuser scenarios. 
+- FILES: Rewrote a portion of the jglobus library to support multiple truststore locations and concurrent, multiuser scenarios.
 - FILES: Fixed a bug where the root of public systems could not be viewed by admins.
 - FILES: Fixed bug where staging and encoding tasks could not get an optimistic lock.
 - JOBS: Rewrote job queues to handle concurrency and failures a bit better. Conflicts seem to be isolated at tests up to 10 simultaneous workers.
@@ -108,15 +122,15 @@ _ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories
 - USAGE: Fixed parameterization bug preventing CD
 
 ### Removed
-- Disabling of apps if the assets disappear temporarily. 
-- 
+- Disabling of apps if the assets disappear temporarily.
+-
 
 ## 2.1.1 - 2015-06-02
 ### Added
 - ALL: Added support for pagination through the limit and offset url query parameters.
 - FILES: Added support for forced downloads on the files download service. This will add the `Content-Disposition` header to the response whenever `force=true` is in the URL query.
 - FILES: Added support for unspecified range request sizes. You can now specify `256-` as a valid range. The files services will return everything after byte 256 in that file. This is helpful whenever you need to continue a download after it previously failed.
-- SYSTEMS: Added new `system.storage.auth.trustedCALocation` and `system.login.auth.trustedCALocation` fields to system definitions to allow for trustroots to be provided as tar, zip, tgz, or bzip2 archives at a public URL. 
+- SYSTEMS: Added new `system.storage.auth.trustedCALocation` and `system.login.auth.trustedCALocation` fields to system definitions to allow for trustroots to be provided as tar, zip, tgz, or bzip2 archives at a public URL.
 - JOBS: Added support for forced downloads on the job output download service. This will add the `Content-Disposition` header to the response whenever `force=true` is in the URL query.
 - JOBS: Added support for unspecified range request sizes. You can now specify `256-` as a valid range. The job output service will return everything after byte 256 in that file. This is helpful whenever you need to continue a download after it previously failed.
 - JOBS: search has been updated so you can query by any job attribute using a URL query string such as status=running. Dates such as `created`, `starttime`, and `submittime` are rounded to the day and matched accordingly. `name`, `inputs`, and `parameters` are all partial matches. All other fields are exact matches.
@@ -126,7 +140,7 @@ _ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories
 - APPS: Fixed a bug where app.output.value.order was not preserved when copying or publishing an app.
 - JOBS: Fixed a bug where jobs could remain in a persistent active state when they failed due to parsing or unexpected errors from the file system. Now they will be set to FAILED after the max job expiration time is reached.
 - JOBS: Fixed a bug where non-primary tenant jobs were not being updated when the callback came. This had to do with the JobDAO.getJobBYUUID() method not removing the tenancy filter.
-- JOBS: 
+- JOBS:
 - SYSTEMS: Added better exception handling to prevent users from attempts to redefine an execution system to a storage system or vice versa.
 - SYSTEMS: Fixed a bug in the SFTP client where port would not default properly if not given.
 - SYSTEMS: Improved exception handling when validation X.509 credentials.
@@ -143,7 +157,7 @@ _ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories
 - APPS: Fixed a bug where app.input.semantics.maxCardinality was not preserved when copying or publishing an app.
 - APPS: Fixed a bug where app.output.value.order was not preserved when copying or publishing an app.
 - JOBS: Fixed a bug where jobs could remain in a persistent active state when they failed due to parsing or unexpected errors from the file system. Now they will be set to FAILED after the max job expiration time is reached.
- 
+
 ### Removed
 - No change.
 
@@ -186,7 +200,7 @@ _ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories
 ### Changed
 - APPS: Input, output, and parameter default values are returned as JSON arrays rather than primary type values when the app.*.semantics.maxCardinality is greater than 1. All parameters, inputs, and outputs are set to 1 by default for backward compatibility.
 - APPS: Increased label length on app inputs, outputs, and parameter labels from 64 to 128 characters.
-- APPS: Fixed bug in SoftwareOutput.setValidator() preventing it from properly validating the value.   
+- APPS: Fixed bug in SoftwareOutput.setValidator() preventing it from properly validating the value.
 - JOBS: Fixed bug in job submission stemming from failed scheduler id parsing when connection to remote system times out.
 - JOBS: Fixed bug in monitoring processes that would terminate a job if it finished before the first check ran.
 - JOBS: Improved exception handling so the scheduler response bubbles back to the job error message when submission fails.
@@ -230,7 +244,7 @@ _ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories
 - No change.
 
 ### Changed
-- FILES: * Updating how file permissions are returned from irods on public systems. Now if the system is public, rather than returning all users, it will simply list the "public" user as having read access unless, of course, they do not have read access. Basically s/$username/public/g. 
+- FILES: * Updating how file permissions are returned from irods on public systems. Now if the system is public, rather than returning all users, it will simply list the "public" user as having read access unless, of course, they do not have read access. Basically s/$username/public/g.
 - FILES: Fixed bug in path resolution when passing in agave:// and tenant file url, such as when transferring data, importing, or specifying job inputs. Standard tenant urls now validate properly and throw exceptions properly when a bad system is provided.
 - FILES: Fixed bug in url parsing allowing for proper handling of system root paths
 - FILES: Fixed bug in file permissions preventing recursive permissions from being applied on non-irods systems.
@@ -252,4 +266,3 @@ _ JOBS, FILES, TRANSFORMS: Added support for transferring job output directories
 
 ### Removed
 - No change.
-

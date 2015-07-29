@@ -40,3 +40,4 @@ test-output
 cache
 tutum
 docker-compose.yml
+config/maven/settings.xml
