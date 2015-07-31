@@ -1,6 +1,22 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.4 - 2015-07-31
+### Added
+- JOBS: Refactored monitoring and callback behavior to set a job to finished once it hits `CLEANING_UP` and is not archiving output. This fixes an unnecessary lag in job processing when the archiving tasks are backed up.
+- SYSTEMS: Adding support for querying S3 complaint APIs.
+
+### Changed
+- ALL: Cleaned up some transaction leaks.
+- APPS: Fixed a bug where the original app owner was used to check permission to update an existing app on a system rather than the authenticated user.
+- JOBS: Fixed the way `*.eq`, `*.nin`, and `*.in` are handled for dates in search.
+- SYSTEMS: Adding correction when hostnames are given rather than URLs in S3 system definitions to make validation friendlier.
+
+
+### Removed
+- nothing
+
+
 ## 2.1.4 - 2015-07-28
 ### Added
 - ALL: Added an authenticated /runtimes endpoint to legacy java apis to allow viewing and editing of configs at runtime. This is rather moot since we're running containers, but it's helpful for steering and debugging.

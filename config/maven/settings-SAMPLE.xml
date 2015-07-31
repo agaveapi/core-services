@@ -16,10 +16,10 @@
 	<servers>
 		<server>
 			<id>docker-registry</id>
-			<username>${user.name}</username>
-			<password>password</password>
+			<username>%%DOCKER_USERNAME%%</username>
+			<password>%%DOCKER_PASSWORD%%</password>
 			<configuration>
-				<email>${user.name}@example.com</email>
+				<email>%%DOCKER_EMAIL%%</email>
 			</configuration>
 		</server>
 	</servers>
