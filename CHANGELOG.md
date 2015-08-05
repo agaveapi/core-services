@@ -1,17 +1,21 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2.1.4 - 2015-07-31
+
+## 2.1.4 - 2015-08-04
 ### Added
+- ALL: Adding configs for auto-reconnect standard and pooled jdbc connections into hibernate config to prevent contention between tomcat, dbcp, and hibernate.
 - JOBS: Refactored monitoring and callback behavior to set a job to finished once it hits `CLEANING_UP` and is not archiving output. This fixes an unnecessary lag in job processing when the archiving tasks are backed up.
 - SYSTEMS: Adding support for querying S3 complaint APIs.
+- SYSTEMS: Added file metadata caching to speed up recursive operations within a request.
 
 ### Changed
 - ALL: Cleaned up some transaction leaks.
 - APPS: Fixed a bug where the original app owner was used to check permission to update an existing app on a system rather than the authenticated user.
+- DOCS: Fixing typo in jobs output endpoint preventing clients from auto detecting the URL.
 - JOBS: Fixed the way `*.eq`, `*.nin`, and `*.in` are handled for dates in search.
 - SYSTEMS: Adding correction when hostnames are given rather than URLs in S3 system definitions to make validation friendlier.
-
+- SYSTEMS: Stabilizing unit tests and optimizing for throughput to get all data access and permission tests working across the entire test matrix.
 
 ### Removed
 - nothing
