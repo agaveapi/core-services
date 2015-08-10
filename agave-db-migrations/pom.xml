@@ -1,0 +1,247 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.iplantc</groupId>
+		<artifactId>agave</artifactId>
+		<version>2.1.4</version>
+	</parent>
+
+	<groupId>org.iplantc.agave</groupId>
+	<artifactId>agave-db-migrations</artifactId>
+	<name>iPlant Agave API Database Migrations</name>
+	<description>Migration definitions and controls for the Agave Platform</description>
+	<packaging>jar</packaging>
+
+	<properties>
+		<sandbox.image.name>agave-sandbox-db</sandbox.image.name>
+	</properties>
+	
+	<build>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<filtering>true</filtering>
+				<directory>src/test/docker</directory>
+			</testResource>
+		</testResources>
+		<plugins>
+			<!-- Migration script runs during test setup phase. The result will be 
+				a contain -->
+			<plugin>
+				<groupId>com.googlecode.flyway</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<driver>${foundation.db.driver}</driver>
+					<url>${foundation.db.url}</url>
+					<user>${foundation.db.username}</user>
+					<password>${foundation.db.password}</password>
+					<table>migrations</table>
+					<baselineVersion>${project.version}</baselineVersion>
+					<baselineDescription>Base Migration</baselineDescription>
+					<skip>false</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>sandbox-data-volume</id>
+						<phase>process-test-sources</phase>
+						<goals>
+							<goal>clean</goal>
+							<goal>migrate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jolokia</groupId>
+	 			<artifactId>docker-maven-plugin</artifactId>
+	 			<version>0.13.2</version>
+	 			<configuration>
+	 				<images>
+		 				<image>
+		 					<alias>sandbox-db</alias>
+		 					<name>mariadb:latest</name>
+		 					
+		 					<run>
+		 						<hostname>docker.example.com</hostname>
+		 						<privileged>true</privileged>
+								<env>
+									<MYSQL_DATABASE>${foundation.db.database}</MYSQL_DATABASE>
+									<MYSQL_USER>${foundation.db.username}</MYSQL_USER>
+									<MYSQL_PASSWORD>${foundation.db.password}</MYSQL_PASSWORD>
+									<MYSQL_ROOT_PASSWORD>mysecretpassword</MYSQL_ROOT_PASSWORD>
+								</env>
+								<ports>
+							    	<port>${foundation.db.port}:3306</port>
+							  	</ports>
+								
+								<!-- Bind mount mysql data directory into the test resource output folder.
+										This will be used to build the volume  -->
+								<volumes>
+									<bind>
+										<volume>${project.build.outputDirectory}/mysql:/var/lib/mysql:rw</volume>
+									</bind>
+								</volumes>		
+								<wait>
+									<log>ready for connections</log>
+									<time>30000</time>
+								</wait>
+								<log>
+									<enabled>true</enabled>
+								</log>
+							</run>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>utest-migration-start</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>	
+					</execution>
+					<execution>
+						<id>utest-migration-stop</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Package the service up as a Docker image. -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<configuration>
+					<!-- Standard build will build an image without the prefix so we don't 
+						force conventions on folks. -->
+					<imageName>${sandbox.image.name}</imageName>
+					<dockerDirectory>${project.build.outputDirectory}</dockerDirectory>
+					<serverId>${docker.registry.id}</serverId>
+					<registryUrl>${docker.registry.url}</registryUrl>
+				</configuration>
+				<executions>
+					<execution>
+						<id>build-container</id>
+						<!-- Generic docker build of API -->
+						<phase>compile</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+						<configuration>
+							<skipDockerBuild>${skip.docker.build}</skipDockerBuild>
+							<useGitCommitId>true</useGitCommitId>
+							<imageTags>
+								<tag>${project.version}</tag>
+								<tag>latest</tag>
+							</imageTags>
+							<tagInfoFile>target/image_info.json</tagInfoFile>
+							<forceTags>true</forceTags>
+							<resources>
+								
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>tag-commit-hash</id>
+						<!-- Tag with the git commit hash. This tags a published image with 
+							the repo commit tag -->
+						<phase>deploy</phase>
+						<goals>
+							<goal>tag</goal>
+						</goals>
+						<configuration>
+							<image>${sandbox.image.name}</image>
+							<newName>${docker.registry.username}/${sandbox.image.name}</newName>
+							<forceTags>true</forceTags>
+							<useGitCommitId>true</useGitCommitId>
+							<skipDockerTag>${skip.docker.tag}</skipDockerTag>
+							<pushImage>${skip.docker.push}</pushImage>
+						</configuration>
+					</execution>
+					<execution>
+						<id>tag-version</id>
+						<!-- Tag with the api version number. This represents the latest of 
+							the api version -->
+						<phase>deploy</phase>
+						<goals>
+							<goal>tag</goal>
+						</goals>
+						<configuration>
+							<image>${sandbox.image.name}</image>
+							<newName>${docker.registry.username}/${sandbox.image.name}:${project.version}</newName>
+							<forceTags>true</forceTags>
+							<skipDockerTag>${skip.docker.tag}</skipDockerTag>
+							<pushImage>${skip.docker.push}</pushImage>
+						</configuration>
+					</execution>
+					<execution>
+						<id>tag-latest</id>
+						<!-- Tag as the "latest". This represents the latest of the api -->
+						<phase>deploy</phase>
+						<goals>
+							<goal>tag</goal>
+						</goals>
+						<configuration>
+							<image>${sandbox.image.name}</image>
+							<newName>${docker.registry.username}/${sandbox.image.name}:latest</newName>
+							<forceTags>true</forceTags>
+							<skipDockerTag>${skip.docker.tag}</skipDockerTag>
+							<useGitCommitId>false</useGitCommitId>
+							<pushImage>${skip.docker.push}</pushImage>
+						</configuration>
+					</execution>
+					<execution>
+						<id>remove-version-tag</id>
+						<!-- Tag as the "latest". This represents the latest of the api -->
+						<goals>
+							<goal>removeImage</goal>
+						</goals>
+						<configuration>
+							<skip>${skip.docker.clean}</skip>
+							<imageName>${sandbox.image.name}:${project.version}</imageName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>remove-image</id>
+						<!-- Tag as the "latest". This represents the latest of the api -->
+						<goals>
+							<goal>removeImage</goal>
+						</goals>
+						<configuration>
+							<skip>${skip.docker.clean}</skip>
+							<imageName>${sandbox.image.name}</imageName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- Fly way -->
+		<dependency>
+			<groupId>com.googlecode.flyway</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>1.7</version>
+		</dependency>
+
+		<!-- mysql jdbc driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.21</version>
+		</dependency>
+	</dependencies>
+</project>

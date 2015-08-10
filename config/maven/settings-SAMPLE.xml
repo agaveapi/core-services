@@ -73,7 +73,8 @@
 						<skip.docker.tag>true</skip.docker.tag>
 						<skip.utest.docker.build>false</skip.utest.docker.build>
 						<skip.utest.docker.run>false</skip.utest.docker.run>
-						<skip.create-db>true</skip.create-db>
+						<skip.create-db>false</skip.create-db>
+						<maven.test.skip>false</maven.test.skip>
 						<skipTests>false</skipTests>
 						
 						<iplant.community.username>testuser</iplant.community.username>
@@ -170,13 +171,14 @@
 
 				<!-- *************************** Database **************************** -->
 				<foundation.db.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.jndi.connection>
-				<foundation.db.url>jdbc:mysql://mysql:3306/agave-api?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
 				<foundation.db.host>mysql</foundation.db.host>
-				<foundation.db.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
-				<foundation.db.driver>com.mysql.jdbc.Driver</foundation.db.driver>
-				<foundation.db.database>agave-api</foundation.db.database>
+				<foundation.db.port>3306</foundation.db.port>
+				<foundation.db.database>agavecore</foundation.db.database>
 				<foundation.db.username>agaveuser</foundation.db.username>
 				<foundation.db.password>password</foundation.db.password>
+				<foundation.db.url>jdbc:mysql://${foundation.db.host}:${foundation.db.port}/${foundation.db.database}?zeroDateTimeBehavior=convertToNull&amp;sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.url>
+				<foundation.db.bootstrap>jdbc:mysql://${foundation.db.host}:${foundation.db.port}/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.bootstrap>
+				<foundation.db.driver>com.mysql.jdbc.Driver</foundation.db.driver>
 				<foundation.db.auth.table>authentication_tokens</foundation.db.auth.table>
 				<foundation.db.postits.table>postits</foundation.db.postits.table>
 				<foundation.db.internaluser.table>internalusers</foundation.db.internaluser.table>
@@ -186,14 +188,15 @@
 
 				<!-- ************************* Test Database ************************* -->
 				<foundation.db.test.jndi.connection>java:comp/env/jdbc/iplant_io</foundation.db.test.jndi.connection>
-				<foundation.db.test.url>jdbc:mysql://mysql:3306/test?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
 				<foundation.db.test.host>mysql</foundation.db.test.host>
-				<foundation.db.test.bootstrap>jdbc:mysql://mysql:3306/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.bootstrap>
-				<foundation.db.test.driver>com.mysql.jdbc.Driver</foundation.db.test.driver>
+				<foundation.db.test.port>3306</foundation.db.test.port>
 				<foundation.db.test.database>test</foundation.db.test.database>
 				<foundation.db.test.username>agaveuser</foundation.db.test.username>
 				<foundation.db.test.password>password</foundation.db.test.password>
-
+				<foundation.db.test.url>jdbc:mysql://${foundation.db.test.host}:${foundation.db.test.port}/${foundation.db.test.database}?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.url>
+				<foundation.db.test.bootstrap>jdbc:mysql://${foundation.db.test.host}:${foundation.db.test.port}/mavenbootstrap?sessionVariables=FOREIGN_KEY_CHECKS=0&amp;relaxAutoCommit=true</foundation.db.test.bootstrap>
+				<foundation.db.test.driver>com.mysql.jdbc.Driver</foundation.db.test.driver>
+				
 				<!-- *********************************************************************
 				**************************************************************************
 				**																		**
