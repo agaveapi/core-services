@@ -3,7 +3,7 @@ proxy:
   name: proxy
   hostname: docker.example.com
   ports:
-    - '8080:80'
+    - '80:80'
   privileged: true
   links:
     - mysql
