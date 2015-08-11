@@ -352,6 +352,6 @@
 		<module>agave-apps</module>
 		<module>agave-jobs</module>
 		<module>agave-wso2-mediator</module>
-		<module>agave-db-migrations</module>
+		<!-- <module>agave-db-migrations</module> -->
 	</modules>
 </project>
