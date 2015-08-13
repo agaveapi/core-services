@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.4 - 2015-08-13
+### Added
+- JOBS: ISO 8601 support for date fields in job search queries
+
+### Changed
+- APPS: Fixed bug preventing existing apps from being updates. Bug was the object was evicted after delete, then referenced later on.
+
+### Removed
+- nothing
+
 
 ## 2.1.4 - 2015-08-04
 ### Added
