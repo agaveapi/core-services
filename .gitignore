@@ -41,3 +41,10 @@ cache
 tutum
 docker-compose.yml
 config/maven/settings.xml
+scriptBuildAll.sh
+scriptRunAll.sh
+stack.yml
+slack.json
+slack.sh
+circle.yml2
+common.yml

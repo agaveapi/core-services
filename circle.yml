@@ -1,0 +1,26 @@
+machine:
+  services:
+    - docker
+  java:
+    version: openjdk7
+checkout:
+  post:
+    - 'git submodule sync'
+    - 'git submodule update --init'
+dependencies:
+  override:
+    - mvn -P agave,plain dependency:resolve
+test:
+  override:
+    - cp config/maven/settings-SAMPLE.xml ~/.m2/settings.xml
+    - sed -i -e "s/%%DOCKER_USERNAME%%/$DOCKER_USER/" ~/.m2/settings.xml
+    - sed -i -e "s/%%DOCKER_PASSWORD%%/$DOCKER_PASS/" ~/.m2/settings.xml
+    - sed -i -e "s/%%DOCKER_EMAIL%%/$DOCKER_EMAIL/" ~/.m2/settings.xml
+    - mvn -P agave,plain clean install
+deployment:
+  hub:
+    commands:
+      - 'echo "DOCKER_HOST value on circle.ci build server is $DOCKER_HOST"'
+      - 'docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS'
+      - 'mvn -P agave,publish deploy -DpushImage'
+      - 'curl -X POST --data-urlencode ''payload={"channel": "#agaveapi", "username": "CircleCiBot", "icon_url": "https://slack.global.ssl.fastly.net/d448/plugins/circleci/assets/service_128.png", "text": "Circle the wagons and alert the workers. There is a new batch of containers in the <http://hub.docker.com/u/agaveapi|Docker Registry>, sir."}'' https://hooks.slack.com/services/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'

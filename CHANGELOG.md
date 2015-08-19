@@ -1,6 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.4 - 2015-08-19
+### Added
+- nothing
+
+### Changed
+- SYSTEMS: agave URI schema is now case insensitive everywhere.
+- JOBS: Job callbacks are broken into their own package and processed using a custom management class.
+- FILES: fixed possible bug in notifications not updating when called from different tenants.
+
+### Removed
+- nothing
+
+
+
 ## 2.1.4 - 2015-08-13
 ### Added
 - JOBS: ISO 8601 support for date fields in job search queries
